@@ -66,6 +66,11 @@
 					<use xlink:href="img/icons.svg#sign-out" />
 				</svg>
 			</button>
+			<button type="button" class="btn btn-primary" id="create-btn" data-show-modal="#add-place-dialog">
+				<svg class="current-color icon">
+					<use xlink:href="/img/icons.svg#plus" />
+				</svg>
+			</button>
 		</nav>
 		<main></main>
 		<aside id="sidebar"></aside>
@@ -140,7 +145,7 @@
 					</datalist>
 					<input type="name" placeholder="Name" required="" />
 					<input name="address[streetAddress]" class="block" placeholder="123 Some St" required="" />
-					<input name="address[addressLocality]" list="cities" placeholder="City" pattern="[A-Z][a-z ]+" required="" />
+					<input name="address[addressLocality]" list="cities" placeholder="City" pattern="[A-Z][A-z\. ]+" required="" />
 					<input name="address[addressRegion]" value="CA" />
 					<input type="number" name="address[postalCode]" placeholder="#####" min="10000" max="99999" list="zips" required="" />
 				</fieldset>
