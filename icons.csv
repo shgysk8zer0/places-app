@@ -2,6 +2,9 @@ dialog-password,img/adwaita-icons/status/dialog-password.svg
 icon-mono,img/icon-mono.svg
 check,img/octicons/check.svg
 search,img/octicons/search.svg
+sign-in,img/octicons/sign-in.svg
+sign-out,img/octicons/sign-out.svg
+contact-new,img/adwaita-icons/actions/contact-new.svg
 x,img/octicons/x.svg
 mail,img/octicons/mail.svg
 credit-card,img/octicons/credit-card.svg
