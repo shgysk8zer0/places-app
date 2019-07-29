@@ -144,6 +144,10 @@
 						<option value="South Lake" />
 					</datalist>
 					<input type="name" placeholder="Name" required="" />
+					<input type="tel" name="telephone" class="block" placeholder="+1-555-555-5555" />
+					<input type="email" name="email" class="block" placeholder="user@example.com" />
+					<input type="url" name="url" class="block" placeholder="http://example.com" />
+					<textarea name="description" class="block" placeholder="Description"></textarea>
 					<input name="address[streetAddress]" class="block" placeholder="123 Some St" required="" />
 					<input name="address[addressLocality]" list="cities" placeholder="City" pattern="[A-Z][A-z\. ]+" required="" />
 					<input name="address[addressRegion]" value="CA" />
@@ -224,6 +228,8 @@
 						</li>
 					</ul>
 				</fieldset>
+				<input type="file" name="image" accept="image/*" />
+				<hr />
 				<button type="submit" class="btn btn-accept">
 					<span class="mobile-hidden">Submit</span>
 					<svg class="current-color icon">
