@@ -75,6 +75,6 @@ ready().then(async () => {
 		const {coords} = await getLocation({enableHighAccuracy: true});
 		$('#longitude').attr({value: coords.longitude});
 		$('#latitude').attr({value: coords.latitude});
-		$('#elevation').attr({value: coords.elevation});
+		$('#elevation').attr({value: coords.altitude});
 	});
 });
