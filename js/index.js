@@ -9,6 +9,7 @@ import './share-button.js';
 import './current-year.js';
 // import './gravatar-img.js';
 import './imgur-img.js';
+import User from 'https://cdn.kernvalley.us/js/User.js';
 import {$, ready, registerServiceWorker, getLocation} from 'https://cdn.kernvalley.us/js/std-js/functions.js';
 
 if (document.documentElement.dataset.hasOwnProperty('serviceWorker')) {
@@ -51,13 +52,15 @@ ready().then(async () => {
 
 	$('form[name="addPlace"]').submit(async event => {
 		event.preventDefault();
+		const body = new FormData(event.target);
+		body.set('token', User.token);
 		const resp = await fetch(new URL('https://api.kernvalley.us/test/'), {
 			headers: new Headers({
 				Accept: 'application/json',
 			}),
 			method: 'POST',
 			mode: 'cors',
-			body: new FormData(event.target),
+			body,
 		});
 
 		const data = await resp.json();
