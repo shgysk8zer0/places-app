@@ -1,8 +1,8 @@
 {
-  "name": "static-template",
+  "name": "places-app",
   "version": "1.0.0",
   "private": true,
-  "description": "A template repository for static sites, including skeleton JS, CSS, SVGs, fonts, etc.",
+  "description": "A PWA for interacting with KernValley.us Places API",
   "config": {
     "serve": {
       "domain": "localhost",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shgysk8zer0/static-template.git"
+    "url": "git+https://github.com/shgysk8zer0/places-app.git"
   },
   "keywords": [
     "static",
@@ -32,9 +32,9 @@
   "author": "Chris Zuber <shgysk8zer0@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shgysk8zer0/static-template/issues"
+    "url": "https://github.com/shgysk8zer0/places-app/issues"
   },
-  "homepage": "https://github.com/shgysk8zer0/static-template",
+  "homepage": "https://github.com/shgysk8zer0/places-app",
   "scripts": {
     "preinstall": "git submodule update --recursive --init",
     "postinstall": "npm run build:icons",

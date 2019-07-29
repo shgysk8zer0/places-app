@@ -1,18 +1,23 @@
-import './std-js/deprefixer.js';
-import './std-js/shims.js';
+import 'https://cdn.kernvalley.us/js/std-js/deprefixer.js';
+import 'https://cdn.kernvalley.us/js/std-js/shims.js';
+import 'https://cdn.kernvalley.us/components/login-button.js';
+import 'https://cdn.kernvalley.us/components/logout-button.js';
+import 'https://cdn.kernvalley.us/components/register-button.js';
+import 'https://cdn.kernvalley.us/components/login-form/login-form.js';
+import 'https://cdn.kernvalley.us/components/registration-form/registration-form.js';
 import './share-button.js';
 import './current-year.js';
-import './gravatar-img.js';
+// import './gravatar-img.js';
 import './imgur-img.js';
-import {$, ready, registerServiceWorker} from './std-js/functions.js';
+import {$, ready, registerServiceWorker, getLocation} from 'https://cdn.kernvalley.us/js/std-js/functions.js';
 
 if (document.documentElement.dataset.hasOwnProperty('serviceWorker')) {
 	registerServiceWorker(document.documentElement.dataset.serviceWorker).catch(console.error);
 }
 
 document.documentElement.classList.replace('no-js', 'js');
-document.body.classList.toggle('no-dialog', document.createElement('dialog') instanceof HTMLUnknownElement);
-document.body.classList.toggle('no-details', document.createElement('details') instanceof HTMLUnknownElement);
+document.documentElement.classList.toggle('no-dialog', document.createElement('dialog') instanceof HTMLUnknownElement);
+document.documentElement.classList.toggle('no-details', document.createElement('details') instanceof HTMLUnknownElement);
 
 ready().then(async () => {
 	$('[data-scroll-to]').click(event => {
@@ -42,5 +47,31 @@ ready().then(async () => {
 		if (target instanceof HTMLElement) {
 			target.tagName === 'DIALOG' ? target.close() : target.open = false;
 		}
+	});
+
+	$('form[name="addPlace"]').submit(async event => {
+		event.preventDefault();
+		const resp = await fetch(new URL('https://api.kernvalley.us/test/'), {
+			headers: new Headers({
+				Accept: 'application/json',
+			}),
+			method: 'POST',
+			mode: 'cors',
+			body: new FormData(event.target),
+		});
+
+		const data = await resp.json();
+		console.info(data);
+	});
+
+	$('form[name="addPlace"]').reset(event => {
+		event.target.closest('dialog').close();
+	});
+
+	$('#get-geo').click(async () => {
+		const {coords} = await getLocation({enableHighAccuracy: true});
+		$('#longitude').attr({value: coords.longitude});
+		$('#latitude').attr({value: coords.latitude});
+		$('#elevation').attr({value: coords.elevation});
 	});
 });

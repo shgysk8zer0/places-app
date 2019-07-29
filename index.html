@@ -5,10 +5,10 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="follow,index" />
-		<meta name="description" content="" />
-		<meta itemprop="description" content="" />
-		<meta name="keywords" content="" />
-		<meta itemprop="keywords" content="" />
+		<meta name="description" content="A PWA for interacting with KernValley.us Places API" />
+		<meta itemprop="description" content="A PWA for interacting with KernValley.us Places API" />
+		<meta name="keywords" content="geo, places, kern valley, kern river valley, map" />
+		<meta itemprop="keywords" content="geo, places, kern valley, kern river valley, map" />
 		<meta name="referrer" content="origin-when-cross-origin"/>
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta itemprop="thumbnailUrl" content="" />
@@ -33,7 +33,7 @@
 		<meta name="msapplication-TileColor" content="#528ff9" />
 		<meta name="msapplication-config" content="/browserconfig.xml" />
 		<meta name="theme-color" content="#528ff9" />
-		<title itemprop="headline"></title>
+		<title itemprop="headline">Places | KernValley.us</title>
 		<script type="module" src="/js/index.js" async=""></script>
 		<link rel="manifest" href="/manifest.json" />
 		<link rel="license" href="/LICENSE" />
@@ -45,10 +45,28 @@
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="preload" href="/img/icons.svg" as="image" type="image/svg+xml" />
 		<link rel="stylesheet" href="/css/styles/index.css" media="all" />
+		<link rel="import" href="https://cdn.kernvalley.us/components/login-form/login-form.html" name="login-form-template" async="" />
+		<link rel="import" href="https://cdn.kernvalley.us/components/registration-form/registration-form.html" name="registration-form-template" async="" />
 	</head>
 	<body id="top" class="grid font-main background-primary color-default">
 		<header id="header"></header>
-		<nav id="nav" class="sticky top shadow background-accent color-alt z-3"></nav>
+		<nav id="nav" class="background-accent sticky top z-3">
+			<button type="button" class="btn btn-primary" is="login-button" hidden="">
+				<svg class="current-color icon">
+					<use xlink:href="img/icons.svg#sign-in" />
+				</svg>
+			</button>
+			<button type="button" class="btn btn-primary" is="register-button" hidden="">
+				<svg class="current-color icon">
+					<use xlink:href="img/icons.svg#contact-new" />
+				</svg>
+			</button>
+			<button type="button" class="btn btn-reject" is="logout-button" hidden="">
+				<svg class="current-color icon">
+					<use xlink:href="img/icons.svg#sign-out" />
+				</svg>
+			</button>
+		</nav>
 		<main></main>
 		<aside id="sidebar"></aside>
 		<footer id="footer" class="background-contrast color-alt">
@@ -60,13 +78,13 @@
 						</svg>
 						<span>GitHub Profile</span>
 					</a>
-					<a class="block" href="https://github.com/shgysk8zer0/static-template" target="_blank" rel="external noopener">
+					<a class="block" href="https://github.com/shgysk8zer0/places-app" target="_blank" rel="external noopener">
 						<svg class="current-color icon social-icon">
 							<use xlink:href="/img/icons.svg#repo" />
 						</svg>
 						<span>GitHub Repo</span>
 					</a>
-					<a class="block" href="https://github.com/shgysk8zer0/static-template/issues" target="_blank" rel="external noopener">
+					<a class="block" href="https://github.com/shgysk8zer0/places-app/issues" target="_blank" rel="external noopener">
 						<svg class="current-color icon social-icon">
 							<use xlink:href="/img/icons.svg#issue-opened" />
 						</svg>
@@ -106,6 +124,87 @@
 				</span>
 			</div>
 		</footer>
+		<dialog id="add-place-dialog">
+			<form name="addPlace" autocomplete="off">
+				<fieldset>
+					<legend>Address</legend>
+					<datalist id="cities">
+						<option value="Lake Isabella" />
+						<option value="Kernville" />
+						<option value="Bodfish" />
+						<option value="Onyx" />
+						<option value="Weldon" />
+						<option value="Wofford Heights" />
+						<option value="Mountain Mesa" />
+						<option value="South Lake" />
+					</datalist>
+					<input type="name" placeholder="Name" required="" />
+					<input name="address[streetAddress]" class="block" placeholder="123 Some St" required="" />
+					<input name="address[addressLocality]" list="cities" placeholder="City" pattern="[A-Z][a-z ]+" required="" />
+					<input name="address[addressRegion]" value="CA" />
+					<input type="number" name="address[postalCode]" placeholder="#####" min="10000" max="99999" list="zips" required="" />
+				</fieldset>
+				<fieldset>
+					<legend>Coordinates</legend>
+					<input type="number" id="longitude" name="geo[longitude]" step="0.000001" placeholder="Longitude" />,
+					<input type="number" id="latitude" name="geo[latitude]" step="0.000001" placeholder="Latitude"/>
+					<br />
+					<input type="number" id="elevation" name="geo[elevation]" Placeholder="Elevation (meters)" />
+					<br />
+					<button type="button" class="btn btn-primary" id="get-geo">
+						<svg class="current-color icon">
+							<use xlink:href="/img/icons.svg#find-location" />
+						</svg>
+					</button>
+				</fieldset>
+				<button type="submit" class="btn btn-accept">
+					<span class="mobile-hidden">Submit</span>
+					<svg class="current-color icon">
+						<use xlink:href="/img/icons.svg#check" />
+					</svg>
+				</button>
+				<button type="reset" class="btn btn-reject">
+					<span class="mobile-hidden">Cancel</span>
+					<svg class="current-color icon">
+						<use xlink:href="/img/icons.svg#x" />
+					</svg>
+				</button>
+			</form>
+		</dialog>
+		<login-form class="relative z-4">
+			<svg class="current-color icon" slot="submit-btn">
+				<use xlink:href="img/icons.svg#check" />
+			</svg>
+			<svg class="current-color icon" slot="reset-btn">
+				<use xlink:href="img/icons.svg#x" />
+			</svg>
+			<svg class="current-color icon" slot="username-label">
+				<use xlink:href="img/icons.svg#avatar-default" />
+			</svg>
+			<svg class="current-color icon" slot="password-label">
+				<use xlink:href="img/icons.svg#dialog-password" />
+			</svg>
+			<svg class="current-color icon" slot="register-btn">
+				<use xlink:href="img/icons.svg#contact-new" />
+			</svg>
+		</login-form>
+		<registration-form class="relative z-4">
+			<svg class="current-color icon" slot="submit-btn">
+				<use xlink:href="img/icons.svg#check" />
+			</svg>
+			<svg class="current-color icon" slot="reset-btn">
+				<use xlink:href="img/icons.svg#x" />
+			</svg>
+			<svg class="current-color icon" slot="username-label">
+				<use xlink:href="img/icons.svg#avatar-default" />
+			</svg>
+			<svg class="current-color icon" slot="password-label">
+				<use xlink:href="img/icons.svg#dialog-password" />
+			</svg>
+			<svg class="current-color icon" slot="login-btn">
+				<use xlink:href="img/icons.svg#sign-in" />
+			</svg>
+		</registration-form>
 		<button type="button" is="share-button" class="round shadow fixed z-4" aria-label="Share">
 			<svg class="current-color icon">
 				<use xlink:href="/img/icons.svg#public-share"></use>
