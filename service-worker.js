@@ -38,7 +38,6 @@ const config = {
 		'https://cdn.kernvalley.us/css/animate.css/animate.css',
 		'/img/apple-touch-icon.png',
 		'/img/favicon.svg',
-		'/img/logos/creative-common-by-sa.svg',
 		'/img/octicons/mail.svg',
 	].map(path => new URL(path, location.origin).href),
 };
