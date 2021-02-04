@@ -1,3 +1,4 @@
+---
 version: 2
 updates:
 - package-ecosystem: npm
@@ -19,7 +20,7 @@ updates:
     interval: daily
     time: "13:00"
   open-pull-requests-limit: 10
-   reviewers:
+  reviewers:
     - shgysk8zer0
   assignees:
     - shgysk8zer0
@@ -32,7 +33,7 @@ updates:
     interval: weekly
     time: "13:00"
   open-pull-requests-limit: 10
-   reviewers:
+  reviewers:
     - shgysk8zer0
   assignees:
     - shgysk8zer0
