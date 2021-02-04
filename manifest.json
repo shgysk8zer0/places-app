@@ -1,28 +1,62 @@
 {
-  "name": "KernValley.us | Places",
-  "short_name": "Places",
-  "version": "1.0.0",
-  "start_url": "/",
+  "name": "Kern Valley Places",
+  "short_name": "KRV Places",
+  "version": "2.0.0",
   "lang": "en",
-  "description": "",
+  "dir": "ltr",
+  "description": "An app for submitting place data to the open KRV places data collection",
+  "orientation": "any",
+  "start_url": "/",
+  "theme_color": "#007bff",
+  "background_color": "#242424",
+  "display": "standalone",
   "icons": [{
     "src": "/img/favicon.svg",
-    "sizes": "any",
-    "type": "image/svg+xml"
+    "sizes": "192x192",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
   }, {
     "src": "/img/icon-192.png",
     "sizes": "192x192",
-    "type": "image/png"
+    "type": "image/png",
+    "purpose": "any maskable"
   }, {
     "src": "/img/icon-512.png",
     "sizes": "512x512",
-    "type": "image/png"
+    "type": "image/png",
+    "purpose": "any maskable"
   }],
-  "theme_color": "#528ff9",
-  "background_color": "#fefefe",
-  "display": "standalone",
-  "developer": {
-		"name": "Chris Zuber",
-		"url": "http://shgysk8zer0.github.io"
-	}
+  "screenshots": [{
+    "src": "https://i.imgur.com/PPSaaYph.jpg",
+    "sizes": "1024x504",
+    "type": "image/jpeg"
+  }, {
+    "src": "https://i.imgur.com/PPSaaYpl.jpg",
+    "sizes": "640x315",
+    "type": "image/jpeg"
+  }, {
+    "src": "https://i.imgur.com/PPSaaYpm.jpg",
+    "sizes": "320x158",
+    "type": "image/jpeg"
+  }, {
+    "src": "https://i.imgur.com/PPSaaYpt.jpg",
+    "sizes": "160x79",
+    "type": "image/jpeg"
+  }],
+  "categories": [
+    "lifestlye",
+    "utility"
+  ],
+  "features": [
+    "Offline access",
+    "Easily submit place data, including Geo Coordinates, business hours, etc.",
+    "Verify location via a map, showing marked location",
+    "Save data to file and/or share place data"
+  ],
+  "iarc_rating_id": null,
+  "prefer_related_applications": false,
+  "related_applications": [{
+    "platform": "webapp",
+    "url": "https://places.kernvalley.us/manifest.json"
+  }]
 }
