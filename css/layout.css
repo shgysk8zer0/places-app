@@ -1,0 +1,39 @@
+@import url("./header.css");
+@import url("./nav.css");
+@import url("./sidebar.css");
+@import url("./main.css");
+@import url("./footer.css");
+
+/* @import url("https://cdn.kernvalley.us/css/core-css/layout/index.css"); */
+
+body {
+	display: grid;
+	grid-template-areas: "nav nav nav" ". main ." "footer footer footer";
+	grid-template-rows: var(--nav-height, 4rem) calc(100vh - var(--nav-height, 4rem)) auto;
+	grid-template-columns: 12px 1fr 12px;
+	gap: 8px;
+}
+
+button.btn[is="share-button"] {
+	bottom: 1rem;
+	right: 1rem;
+	padding: 0.8rem;
+	font-size: 1.5rem;
+}
+
+#create-btn {
+	bottom: 1rem;
+	left: 1rem;
+	padding: 0.8rem;
+	font-size: 1.5rem;
+}
+
+#get-geo {
+	width: 200px;
+}
+
+@media (max-width: 800px) {
+	.mobile-hidden {
+		display: none;
+	}
+}

@@ -1,72 +1,15 @@
 'use strict';
-// 2019-06-11 12:25
-const config = {
-	version: location.hostname === 'localhost' ? new Date().toISOString() : '1.0.0-a',
-	stale: [
-		'/',
-		'/js/index.js',
-		'/img/icons.svg',
-		'https://cdn.kernvalley.us/js/std-js/deprefixer.js',
-		'https://cdn.kernvalley.us/js/std-js/shims.js',
-		'https://cdn.kernvalley.us/js/std-js/md5.js',
-		'/js/share-button.js',
-		'/js/share-config.js',
-		'/js/gravatar-img.js',
-		'/js/current-year.js',
-		'/js/imgur-img.js',
-		'https://cdn.kernvalley.us/js/std-js/Notification.js',
-		'https://cdn.kernvalley.us/js/std-js/webShareApi.js',
-		'https://cdn.kernvalley.us/js/share-config.js',
-		'https://cdn.kernvalley.us/js/std-js/esQuery.js',
-		'https://cdn.kernvalley.us/js/std-js/functions.js',
-		'/css/styles/index.css',
-		'/css/styles/vars.css',
-		'/css/styles/layout.css',
-		'/css/styles/header.css',
-		'/css/styles/nav.css',
-		'/css/styles/main.css',
-		'/css/styles/sidebar.css',
-		'/css/styles/footer.css',
-		'https://cdn.kernvalley.us/css/core-css/rem.css',
-		'https://cdn.kernvalley.us/css/core-css/viewport.css',
-		'https://cdn.kernvalley.us/css/core-css/element.css',
-		'https://cdn.kernvalley.us/css/core-css/class-rules.css',
-		'https://cdn.kernvalley.us/css/core-css/utility.css',
-		'https://cdn.kernvalley.us/css/core-css/fonts.css',
-		'https://cdn.kernvalley.us/css/core-css/animations.css',
-		'https://cdn.kernvalley.us/css/normalize/normalize.css',
-		'https://cdn.kernvalley.us/css/animate.css/animate.css',
-		'/img/apple-touch-icon.png',
-		'/img/favicon.svg',
-		'/img/octicons/mail.svg',
-	].map(path => new URL(path, location.origin).href),
-};
+/* eslint-env serviceworker */
+/* global init: readonly, config: readonly */
+/* 2021-01-14 */
+const CDN = 'https://cdn.kernvalley.us/';
 
-self.addEventListener('install', async () => {
-	const cache = await caches.open(config.version);
-	const keys = await caches.keys();
-	const old = keys.filter(k => k !== config.version);
-	await Promise.all(old.map(key => caches.delete(key)));
+try {
+	self.importScripts(new URL('./service-worker.js', CDN), '/sw-config.js');
 
-	await cache.addAll(config.stale);
-	skipWaiting();
-});
-
-self.addEventListener('activate', event => {
-	event.waitUntil(async function() {
-		clients.claim();
-	}());
-});
-
-self.addEventListener('fetch', async event => {
-	async function get(request) {
-		const cache = await caches.open(config.version);
-		const cached = await cache.match(request);
-
-		return cached instanceof Response ? cached : fetch(request);
+	if (init instanceof Function && typeof config === 'object') {
+		init(self, config);
 	}
-
-	if (event.request.method === 'GET' && config.stale.includes(event.request.url)) {
-		event.respondWith(get(event.request));
-	}
-});
+} catch(err) {
+	console.error(err);
+}

@@ -1,40 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="no-js border-box smooth-scroll" data-service-worker="/service-worker.js" itemtype="https://schema.org/WebPage" prefix="og: http://ogp.me/ns#" itemscope="">
+<html lang="en" dir="ltr" class="no-js border-box smooth-scroll" data-theme="auto" itemtype="https://schema.org/WebPage" prefix="og: http://ogp.me/ns#" itemscope="">
 	<head>
 		<base href="/" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="follow,index" />
-		<meta name="description" content="A PWA for interacting with KernValley.us Places API" />
-		<meta itemprop="description" content="A PWA for interacting with KernValley.us Places API" />
+		<meta name="description" content="An app for submitting place data to the open KRV places data collection" />
+		<meta itemprop="description" content="An app for submitting place data to the open KRV places data collection" />
 		<meta name="keywords" content="geo, places, kern valley, kern river valley, map" />
 		<meta itemprop="keywords" content="geo, places, kern valley, kern river valley, map" />
-		<meta name="referrer" content="origin-when-cross-origin"/>
+		<meta name="referrer" content="no-referrer"/>
 		<meta name="mobile-web-app-capable" content="yes" />
-		<meta itemprop="thumbnailUrl" content="" />
+		<meta itemprop="thumbnailUrl" content="https://i.imgur.com/PPSaaYpl.jpg" />
 		<!-- Social data -->
 		<!-- Facebook | OpenGraph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="" />
-		<meta property="og:url" content="" />
-		<meta property="og:description" content="" />
-		<meta property="og:keywords" content="" />
-		<meta property="og:image" content="" />
-		<meta property="og:image:height" content="" />
-		<meta property="og:image:width" content="" />
+		<meta property="og:title" content="KRV Places" />
+		<meta property="og:url" content="https://places.kernvalley.us" />
+		<meta property="og:description" content="An app for submitting place data to the open KRV places data collection" />
+		<meta property="og:keywords" content="geo, places, kern valley, kern river valley, map" />
+		<meta property="og:image" content="https://i.imgur.com/PPSaaYpl.jpg" />
+		<meta property="og:image:height" content="315" />
+		<meta property="og:image:width" content="640" />
 		<!-- /Facebook | OpenGraph -->
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:creator" content="" />
+		<meta name="twitter:creator" content="kern_valley" />
 		<meta name="twitter:description" content="" />
-		<meta name="twitter:image" content="" />
+		<meta name="twitter:image" content="https://i.imgur.com/PPSaaYpl.jpg" />
 		<!-- /Twitter -->
 		<!-- /Social data -->
 		<meta name="msapplication-TileColor" content="#528ff9" />
 		<meta name="msapplication-config" content="/browserconfig.xml" />
 		<meta name="theme-color" content="#528ff9" />
-		<title itemprop="headline">Places | KernValley.us</title>
-		<script type="module" src="/js/index.js" async=""></script>
+		<title itemprop="name headline">Places | KernValley.us</title>
+		<link rel="preconnect" href="https://maps.wikimedia.org" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="preconnect" href="https://api.github.com" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="preload" href="https://cdn.kernvalley.us/fonts/roboto.woff2" as="font" type="font/woff2" crossorigin="anonymous" importance="high" />
+		<link rel="preload" href="https://cdn.kernvalley.us/components/leaflet/map.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="high" />
+		<link rel="preload" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="high" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" />
+		<link rel="preload" href="https://cdn.kernvalley.us/components/github/user.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="auto" />
+		<script src="https://cdn.polyfill.io/v3/polyfill.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer="" nomodule=""></script>
+		<script src="https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer" integrity="sha384-xyhN4T4+9VPh8uXl6uWjGzsqwNXN9C2tla8b6zSrSqYlMFUoeCdoxiEJU0js+GNE" async="" defer="" nomodule=""></script>
+		<script src="https://cdn.kernvalley.us/components/leaflet/map.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer=""></script>
+		<!-- <script type="module" src="/js/index.js" referrerpolicy="no-referrer" async="" defer=""></script> -->
+		<script src="/js/index.min.js" referrerpolicy="no-referrer" async="" defer=""></script>
 		<link rel="manifest" href="/manifest.json" />
 		<link rel="license" href="/LICENSE" />
 		<link rel="icon" href="/img/favicon.svg" type="image/svg+xml" sizes="any" />
@@ -44,89 +54,128 @@
 		<link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#528ff9" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="preload" href="/img/icons.svg" as="image" type="image/svg+xml" />
-		<link rel="stylesheet" href="/css/styles/index.css" media="all" />
-		<link rel="import" href="https://cdn.kernvalley.us/components/login-form/login-form.html" name="login-form-template" async="" />
-		<link rel="import" href="https://cdn.kernvalley.us/components/registration-form/registration-form.html" name="registration-form-template" async="" />
+		<!-- <link rel="stylesheet" href="/css/index.css" referrerpolicy="no-referrer" media="all" /> -->
+		<link rel="stylesheet" href="/css/index.min.css" referrerpolicy="no-referrer" media="all" />
 	</head>
 	<body id="top" class="grid font-main background-primary color-default">
-		<header id="header"></header>
-		<nav id="nav" class="background-accent sticky top z-3">
-			<button type="button" class="btn btn-primary" is="login-button" hidden="">
-				<svg class="current-color icon">
-					<use xlink:href="img/icons.svg#sign-in" />
+		<header id="header" hidden=""></header>
+		<nav id="nav" class="background-accent color-alt sticky top shadow z-3 flex row no-wrap">
+			<button type="button" is="app-list" class="btn nav-btn" hidden="">
+				<svg class="icon" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+					<use xlink:href="/img/icons.svg#apps"></use>
 				</svg>
 			</button>
-			<button type="button" class="btn btn-primary" is="register-button" hidden="">
-				<svg class="current-color icon">
-					<use xlink:href="img/icons.svg#contact-new" />
+			<span class="grow-4"></span>
+			<button type="button" is="pwa-install" id="install-btn" class="btn nav-btn" src="/service-worker.js" scope="/" title="Install Web App" reloadonupdate="" hidden="">
+				<svg class="icon current-color" width="22" height="22" fill="currentColor" role="img" aria-hidden="true">
+					<use xlink:href="/img/icons.svg#system-software-install"></use>
 				</svg>
-			</button>
-			<button type="button" class="btn btn-reject" is="logout-button" hidden="">
-				<svg class="current-color icon">
-					<use xlink:href="img/icons.svg#sign-out" />
-				</svg>
-			</button>
-			<button type="button" class="btn btn-primary" id="create-btn" data-show-modal="#add-place-dialog">
-				<svg class="current-color icon">
-					<use xlink:href="/img/icons.svg#plus" />
-				</svg>
+			<span class="mobile-hidden">Install</span>
 			</button>
 		</nav>
-		<main></main>
+		<main class="card shadow">
+			<p class="status-box info">This app is for submitting data for the <a href="https://maps.kernvalley.us" rel="noopener noreferrer external">Kern Valley Maps App</a> and <a href="https://guide.kernvalley.us" rel="noopener noreferrer external">Kern Valley Guide App</a>. Please fill out the form with the name, address, GPS coodinates, and other information.</p>
+			<br />
+			<div class="center">
+				<button type="button" class="btn btn-primary" data-show-modal="#add-place-dialog">Click here to get started</button>
+			</div>
+		</main>
 		<aside id="sidebar"></aside>
-		<footer id="footer" class="background-contrast color-alt">
-			<div class="social-links cols-2">
-				<div class="cols inline-block">
-					<a class="block" href="https://github.com/shgysk8zer0/" target="_blank" rel="external noopener">
-						<svg class="current-color icon social-icon">
-							<use xlink:href="/img/icons.svg#mark-github" />
+		<footer id="footer">
+			<div class="flex row wrap space-around footer-links">
+				<div class="inline-block footer-links">
+					<a href="https://kernvalley.us" class="block" rel="noopener external noreferrer">
+						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#web-browser"></use>
+						</svg>
+						<span>KernValley.US</span>
+					</a>
+					<a href="https://kernvalley.us/privacy/" class="block" rel="noopener external noreferrer">
+						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#eye"></use>
+						</svg>
+						<span>Privacy</span>
+					</a>
+					<a href="/contact" class="block">
+						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#address-book"></use>
+						</svg>
+						<span>Contact</span>
+					</a>
+					<a href="https://apps.kernvalley.us" class="block" rel="noreferrer noopener external">
+						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#apps"></use>
+						</svg>
+						<span>All Apps</span>
+					</a>
+				</div>
+				<div class="inline-block footer-links">
+						<a class="block" href="https://www.facebook.com/KernValley.us/" target="_blank" rel="external noopener" itemprop="sameAs">
+							<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#facebook"></use>
+							</svg>
+							<span>Facebook</span>
+						</a>
+						<a class="block" href="https://twitter.com/kern_valley" target="_blank" rel="external noopener" itemprop="sameAs">
+							<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#twitter"></use>
+							</svg>
+							<span>Twitter</span>
+						</a>
+						<a class="block" href="https://instagram.com/kernvalley_us/" target="_blank" rel="noopener noreferrer external" itemprop="sameAs">
+							<img src="https://cdn.kernvalley.us/img/logos/instagram.svg" class="social-icon" loading="lazy" decoding="async" crossorigin="anonymous" referrerpolicy="no-referrer" alt="" width="20" height="20" />
+							<span>Instagram</span>
+						</a>
+						<a class="block" href="https://www.linkedin.com/company/18644791/" target="_blank" rel="external noopener" itemprop="sameAs">
+							<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#linkedin"></use>
+							</svg>
+							<span>LinkedIn</span>
+						</a>
+				</div>
+				<div class="inline-block">
+					<a class="block" href="https://github.com/kernvalley/" target="_blank" rel="external noopener">
+						<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#mark-github"></use>
 						</svg>
 						<span>GitHub Profile</span>
 					</a>
-					<a class="block" href="https://github.com/shgysk8zer0/places-app" target="_blank" rel="external noopener">
-						<svg class="current-color icon social-icon">
-							<use xlink:href="/img/icons.svg#repo" />
+					<a class="block" href="https://github.com/kernvalley/ads.kernvalley.us" target="_blank" rel="external noopener">
+						<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#repo"></use>
 						</svg>
+
 						<span>GitHub Repo</span>
 					</a>
-					<a class="block" href="https://github.com/shgysk8zer0/places-app/issues" target="_blank" rel="external noopener">
-						<svg class="current-color icon social-icon">
-							<use xlink:href="/img/icons.svg#issue-opened" />
+					<a class="block" href="https://github.com/kernvalley/ads.kernvalley.us/issues" target="_blank" rel="external noopener">
+						<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#issue-opened"></use>
 						</svg>
 						<span>Report a Problem</span>
 					</a>
 				</div>
-				<div class="cols inline-block">
-					<a class="block" href="https://shgysk8zer0.github.io" target="_blank" rel="external noopener" itemprop="sameAs">
-						<svg class="current-color icon social-icon">
-							<use xlink:href="/img/icons.svg#web-browser" />
-						</svg>
-						<span>My Website</span>
-					</a>
-					<a class="block" href="https://twitter.com/shgysk8zer0" target="_blank" rel="external noopener" itemprop="sameAs">
-						<svg class="icon social-icon">
-							<use xlink:href="/img/icons.svg#twitter" />
-						</svg>
-						<span>On Twitter</span>
-					</a>
-					<a class="block" href="https://www.linkedin.com/in/chris-zuber-455346141/" target="_blank" rel="external noopener" itemprop="sameAs">
-						<svg class="icon social-icon">
-							<use xlink:href="/img/icons.svg#linkedin" />
-						</svg>
-						<span>LinkedIn</span>
-					</a>
-				</div>
+			</div>
+			<div>
+				<hr />
+				<app-stores class="flex row wrap app-stores"></app-stores>
 			</div>
 			<hr />
-			<div class="copyright">
-				<span>&copy;</span>
-				<time itemprop="copyrightYear" is="current-year">2019</time>
-				<span itemprop="copyrightHolder" itemtype="https://schema.org/Person" itemscope="">
-					<a href="https://shgysk8zer0.github.io" target="_blank" rel="external noopener" itemprop="url">
-						<span itemprop="givenName">Chris</span>
-						<span itemprop="familyName">Zuber</span>
-					</a>
-				</span>
+			<div class="copyright flex wrap space-evenly">
+				<github-user user="kernvalley" loading="lazy">
+					<h3 slot="header" class="center">Created By</h3>
+					<div slot="footer">
+						<span>©</span>
+						<time itemprop="copyrightYear">2021</time>
+						<span itemprop="copyrightHolder" itemtype="https://schema.org/Organization" itemscope="" hidden="">
+							<a href="https://kernvalley.us" target="_blank" rel="external noopener noreferrer" itemprop="url">
+								<span itemprop="name">KernValley.US</span>
+							</a>
+						</span>
+					</div>
+				</github-user>
+				<a href="https://www.kernriverconservancy.org/?utm_source=kern-valley-maps&amp;utm_medium=web&amp;utm_campaign=keep-kern-clean" target="_blank" rel="noopener noreferrer external" id="keep-kern-clean-badge" class="inline-block" title="#KeepKernClean">
+				<img src="https://cdn.kernvalley.us/img/keep-kern-clean.svg" alt="#KeepKernClean" decoding="async" loading="lazy" crossorigin="anonymous" referrerpolicy="no-referrer" width="257" height="282" />
+				</a>
 			</div>
 		</footer>
 		<dialog id="add-place-dialog">
@@ -143,142 +192,278 @@
 						<option value="Mountain Mesa" />
 						<option value="South Lake" />
 					</datalist>
-					<input type="name" placeholder="Name" required="" />
-					<input type="tel" name="telephone" class="block" placeholder="+1-555-555-5555" />
-					<input type="email" name="email" class="block" placeholder="user@example.com" />
-					<input type="url" name="url" class="block" placeholder="http://example.com" />
-					<textarea name="description" class="block" placeholder="Description"></textarea>
-					<input name="address[streetAddress]" class="block" placeholder="123 Some St" required="" />
-					<input name="address[addressLocality]" list="cities" placeholder="City" pattern="[A-Z][A-z\. ]+" required="" />
-					<input name="address[addressRegion]" value="CA" />
-					<input type="number" name="address[postalCode]" placeholder="#####" min="10000" max="99999" list="zips" required="" />
+					<div class="form-group">
+						<input type="text" name="name" class="input" placeholder="Name" required="" />
+					</div>
+					<div class="form-group">
+						<select name="@type" class="input" required="">
+							<optgroup label="Food Service">
+								<option value="Restaurant">Restaurant</option>
+								<option value="FastFoodRestaurant">Fast Food</option>
+								<option value="CafeOrCoffeeShop">Cafe or Coffee Shop</option>
+								<option value="BarOrPub">Bar or Pub</option>
+								<option value="FoodEstablishment">Other Food Business</option>
+							</optgroup>
+							<optgroup label="Shopping">
+								<option value="GroceryStore">Grocery Store</option>
+								<option value="ConvenienceStore">Convenience Store</option>
+								<option value="HomeGoodsStore">Home Goods Store</option>
+								<option value="Pharmacy">Pharmacy</option>
+								<option value="LiquorStore">Liquor Store</option>
+								<option value="ClothingStore">Clothing Store</option>
+								<option value="ShoeStore">Shoe Store</option>
+								<option value="DepartmentStore">Department Store</option>
+								<option value="WholesaleStore">Wholesale Store</option>
+								<option value="OfficeEquipmentStore">Office Equipment Store</option>
+								<option value="OutletStore">Outlet Store</option>
+								<option value="SportingGoodsStore">Sporting Goods Store</option>
+								<option value="HardwareStore">Hardware Store</option>
+								<option value="GardenStore">Garden Store</option>
+								<option value="HobbyShop">Hobby Shop</option>
+								<option value="Florist">Florist</option>
+								<option value="FurnitureStore">Furniture Store</option>
+								<option value="ElectronicsStore">Electronics Store</option>
+								<option value="ComputerStore">Computer Store</option>
+								<option value="MobilePhoneStore">Mobile Phone Store</option>
+								<option value="GasStation">Gas Station</option>
+								<option value="BikeStore">Bike Store</option>
+								<option value="JewelryStore">Jewelry Store</option>
+								<option value="PawnShop">Pawn Shop</option>
+								<option value="Store">Other Store</option>
+							</optgroup>
+							<optgroup label="Financial and Legal Services">
+								<option value="BankOrCreditUnion">Bank or Credit Union</option>
+								<option value="AutomatedTeller">ATM</option>
+								<option value="FinancialService">Other Financial Service</option>
+								<option value="LegalService">Legal Service</option>
+								<option value="Attorney">Attorney</option>
+								<option value="Notary">Notary</option>
+							</optgroup>
+							<optgroup label="Entertainment and Activities">
+								<option value="BowlingAlley">Bowling Alley</option>
+								<option value="Campground">Campground</option>
+								<option value="RVPark">RV Park</option>
+								<option value="MovieTheater">Movie Theater</option>
+								<option value="PerformingArtsTheater">Performing Arts Theater</option>
+								<option value="MovieRentalStore">Movie Rental Store</option>
+								<option value="MusicStore">Music Store</option>
+								<option value="Park">Park</option>
+								<option value="Playground">Playground</option>
+								<option value="StadiumOrArena">Stadium or Arena</option>
+								<option value="Museum">Museum</option>
+								<option value="ArtGallery">Art Gallery</option>
+								<option value="EventVenue">Event Venue</option>
+								<option value="TouristAttraction">Tourist Attraction</option>
+								<option value="LandmarksOrHistoricalBuildings">Landmark or Historical Building</option>
+								<option value="EntertainmentBusiness">Other Entertainment Business</option>
+							</optgroup>
+							<optgroup label="Lodging">
+								<option value="Motel">Motel</option>
+								<option value="Resort">Resort</option>
+								<option value="LodgingBusiness">Other Lodging Business</option>
+							</optgroup>
+							<optgroup label="Health and Beauty">
+								<option value="BeautySalon">Beauty Salon</option>
+								<option value="DaySpa">Day Spa</option>
+								<option value="HairSalon">Hair Salon</option>
+								<option value="HealthClub">Health Club</option>
+								<option value="NailSalon">Nail Salon</option>
+								<option value="TattooParlor">Tattoo Parlor</option>
+								<option value="HealthAndBeauty">Other Health / Beauty</option>
+							</optgroup>
+							<optgroup label="Automotive">
+								<option value="AutoPartsStore">Auto Parts Store</option>
+								<option value="AutoWash">Car Wash</option>
+								<option value="AutoRepair">Auto Repair</option>
+								<option value="MotorcycleRepair">Motorcycle Repair</option>
+								<option value="AutoBodyShop">Auto Body Shop</option>
+								<option value="AutoDealer">Auto Dealer</option>
+								<option value="MotorcycleDealer">Motorcycle Dealer</option>
+								<option value="AutoRental">Auto Rental</option>
+								<option value="TireShop">Tire Shop</option>
+								<option value="AutomotiveBusiness">Other Automotive Business</option>
+							</optgroup>
+							<optgroup label="Home Repair and Construction">
+								<option value="Electrician">Electrician</option>
+								<option value="Plumber">Plumber</option>
+								<option value="Locksmith">Locksmith</option>
+								<option value="HousePainter">House Painter</option>
+								<option value="GeneralContractor">General Contractor</option>
+								<option value="RoofingContractor">Roofing Contractor</option>
+								<option value="HVACBusiness">HVAC Business</option>
+								<option value="MovingCompany">Moving Company</option>
+							</optgroup>
+							<optgroup label="Medical and Emergency Services">
+								<option value="Hospital">Hospital</option>
+								<option value="PoliceStation">Police Station</option>
+								<option value="FireStation">Fire Station</option>
+								<option value="EmergencyService">Other Emergency Service</option>
+								<option value="Dentist">Dentist</option>
+								<option value="MedicalBusiness">Medical Business</option>
+							</optgroup>
+							<optgroup label="Educational">
+								<option value="Library">Library</option>
+								<option value="Preschool">Preschool</option>
+								<option value="ElementarySchool">Elementary School</option>
+								<option value="MiddleSchool">Middle School</option>
+								<option value="HighSchool">High School</option>
+								<option value="CollegeOrUniversity">College or University</option>
+								<option value="School">Other School</option>
+								<option value="EducationalOrganization">Other Educational Service</option>
+							</optgroup>
+							<optgroup label="Misc Business or Place">
+								<option value="ChildCare">Child Care</option>
+								<option value="DryCleaningOrLaundry">Dry Cleaning or Laundry</option>
+								<option value="Cemetary">Cemetary</option>
+								<option value="Crematorium">Crematorium</option>
+								<option value="AnimalShelter">Animal Shelter</option>
+								<option value="RealEstateAgent">Real Estate Agent</option>
+								<option value="EmploymentAgency">Employment Agency</option>
+								<option value="GovernmentOffice">Government Office</option>
+								<option value="PostOffice">Post Office</option>
+								<option value="RecyclingCenter">Recycling Center</option>
+								<option value="ProfessionalService">Professional Service</option>
+								<option value="TouristInformationCenter">Tourist Information Center</option>
+								<option value="TravelAgency">Travel Agency</option>
+								<option value="SelfStorage">Self Storage Facility</option>
+								<option value="Church">Church</option>
+								<option value="CivicStructure">Civic Structure</option>
+								<option value="LocalBusiness" selected="">Other Business</option>
+							</optgroup>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="tel" name="telephone" class="input" placeholder="+1-555-555-5555" />
+					</div>
+					<div class="form-group">
+						<input type="email" name="email" class="input" placeholder="user@example.com" />
+					</div>
+					<div class="form-group">
+						<input type="url" name="url" class="input" placeholder="http://example.com" />
+					</div>
+					<div class="form-group">
+						<textarea name="description" class="input" placeholder="Description"></textarea>
+					</div>
+					<div class="form-group">
+						<input name="address[streetAddress]" class="input" placeholder="123 Some St" />
+						<input name="address[postOfficeBoxNumber]" class="input" placeholder="PO Box ####" />
+						<input name="address[addressLocality]" list="cities" class="input" placeholder="City" pattern="[A-Z][A-z\. ]+" required="" />
+						<input name="address[addressRegion]" class="input" value="CA" />
+						<input type="number" name="address[postalCode]" class="input" placeholder="#####" min="10000" max="99999" list="zips" required="" />
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>Coordinates</legend>
-					<input type="number" id="longitude" name="geo[longitude]" step="0.000001" placeholder="Longitude" />,
-					<input type="number" id="latitude" name="geo[latitude]" step="0.000001" placeholder="Latitude"/>
+					<div class="form-group">
+						<input type="number" id="longitude" class="input" name="geo[longitude]" step="0.00000001" placeholder="Longitude" />
+					</div>
+					<div class="form-group">
+						<input type="number" id="latitude" class="input" name="geo[latitude]" step="0.00000001" placeholder="Latitude"/>
+					</div>
+					<div class="form-group">
+						<input type="number" id="elevation" class="input" name="geo[elevation]" Placeholder="Elevation (meters)" />
+					</div>
 					<br />
-					<input type="number" id="elevation" name="geo[elevation]" Placeholder="Elevation (meters)" />
+					<div class="flex row space-evenly">
+						<button type="button" class="btn btn-primary" id="get-geo">
+							<svg class="current-color icon">
+								<use xlink:href="/img/icons.svg#find-location" />
+							</svg>
+						</button>
+					</div>
 					<br />
-					<button type="button" class="btn btn-primary" id="get-geo">
-						<svg class="current-color icon">
-							<use xlink:href="/img/icons.svg#find-location" />
-						</svg>
-					</button>
+					<leaflet-map center="35.664676,-118.450685" id="map" class="relative custom-element contain-content z-1" zoom="12" maxzoom="19" minzoom="9" crossorigin="annonymous" detectretina="" zoomcontrol=""></leaflet-map>
+					<br />
 				</fieldset>
 				<fieldset>
 					<legend>Business Hours</legend>
 					<!-- https://schema.org/OpeningHoursSpecification -->
-					<ul>
-						<li>
+					<details id="business-hours" class="accordion" open="">
+						<summary class="btn btn-primary block">Daily Hours</summary>
+						<div class="form-group">
 							<label>
-								<span>Sunday</span>
-								<input type="time" name="openingHoursSpecification[Sunday][open]" placeholder="##:##" />
+								<span>Sun<span class="mobile-hidden">day</span></span>
+								<input type="time" name="openingHoursSpecification[Sunday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Sunday][close]" placeholder="##:##" />
-						</li>
-						<li>
+							<input type="time" name="openingHoursSpecification[Sunday][closes]" placeholder="##:##" />
+						</div>
+						<div class="form-group">
 							<label>
-								<span>Monday</span>
-								<input type="time" name="openingHoursSpecification[Monday][open]" placeholder="##:##" />
+								<span>Mon<span class="mobile-hidden">day</span></span>
+								<input type="time" name="openingHoursSpecification[Monday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Monday][close]" placeholder="##:##" />
-						</li>
-						<li>
+							<input type="time" name="openingHoursSpecification[Monday][closes]" placeholder="##:##" />
+						</div>
+						<div class="form-group">
 							<label>
-								<span>Tuesday</span>
-								<input type="time" name="openingHoursSpecification[Tuesday][open]" placeholder="##:##" />
+								<span>Tue<span class="mobile-hidden">sday</span></span>
+								<input type="time" name="openingHoursSpecification[Tuesday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Tuesday][close]" placeholder="##:##" />
-						</li>
-						<li>
+							<input type="time" name="openingHoursSpecification[Tuesday][closes]" placeholder="##:##" />
+						</div>
+						<div class="form-group">
 							<label>
-								<span>Wednesday</span>
-								<input type="time" name="openingHoursSpecification[Wednesday][open]" placeholder="##:##" />
+								<span>Wed<span class="mobile-hidden">nesday</span></span>
+								<input type="time" name="openingHoursSpecification[Wednesday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Wednesday][close]" placeholder="##:##" />
-						</li>
-						<li>
+							<input type="time" name="openingHoursSpecification[Wednesday][closes]" placeholder="##:##" />
+						</div>
+						<div class="form-group">
 							<label>
-								<span>Thursday</span>
-								<input type="time" name="openingHoursSpecification[Thursday][open]" placeholder="##:##" />
+								<span>Thu<span class="mobile-hidden">rsday</span></span>
+								<input type="time" name="openingHoursSpecification[Thursday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Thursday][close]" placeholder="##:##" />
-						</li>
-						<li>
+							<input type="time" name="openingHoursSpecification[Thursday][closes]" placeholder="##:##" />
+						</div>
+						<div class="form-group">
 							<label>
-								<span>Friday</span>
-								<input type="time" name="openingHoursSpecification[Friday][open]" placeholder="##:##" />
+								<span>Fri<span class="mobile-hidden">day</span></span>
+								<input type="time" name="openingHoursSpecification[Friday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Friday][close]" placeholder="##:##" />
-						</li>
-						<li>
+							<input type="time" name="openingHoursSpecification[Friday][closes]" placeholder="##:##" />
+						</div>
+						<div class="form-group">
 							<label>
-								<span>Saturday</span>
-								<input type="time" name="openingHoursSpecification[Saturday][open]" placeholder="##:##" />
+								<span>Sat<span class="mobile-hidden">urday</span></span>
+								<input type="time" name="openingHoursSpecification[Saturday][opens]" placeholder="##:##" />
 							</label>
 							<span>&mdash;</span>
-							<input type="time" name="openingHoursSpecification[Saturday][close]" placeholder="##:##" />
-						</li>
-					</ul>
+							<input type="time" name="openingHoursSpecification[Saturday][closes]" placeholder="##:##" />
+						</div>
+					</details>
 				</fieldset>
-				<input type="file" name="image" accept="image/*" />
+				<div class="form-group">
+					<input type="file" name="image" accept="image/*" class="input" />
+				</div>
 				<hr />
-				<button type="submit" class="btn btn-accept">
-					<span class="mobile-hidden">Submit</span>
-					<svg class="current-color icon">
-						<use xlink:href="/img/icons.svg#check" />
-					</svg>
-				</button>
-				<button type="reset" class="btn btn-reject">
-					<span class="mobile-hidden">Cancel</span>
-					<svg class="current-color icon">
-						<use xlink:href="/img/icons.svg#x" />
-					</svg>
-				</button>
+				<div id="btn-container" class="btns flex row no-wrap">
+					<button type="submit" class="btn btn-accept grow-1">
+						<span class="mobile-hidden">Submit</span>
+						<svg class="current-color icon">
+							<use xlink:href="/img/icons.svg#check" />
+						</svg>
+					</button>
+					<button type="reset" class="btn btn-reject grow-1">
+						<span class="mobile-hidden">Cancel</span>
+						<svg class="current-color icon">
+							<use xlink:href="/img/icons.svg#x" />
+						</svg>
+					</button>
+				</div>
 			</form>
 		</dialog>
-		<login-form class="relative z-4">
-			<svg class="current-color icon" slot="submit-btn">
-				<use xlink:href="img/icons.svg#check" />
-			</svg>
-			<svg class="current-color icon" slot="reset-btn">
-				<use xlink:href="img/icons.svg#x" />
-			</svg>
-			<svg class="current-color icon" slot="username-label">
-				<use xlink:href="img/icons.svg#avatar-default" />
-			</svg>
-			<svg class="current-color icon" slot="password-label">
-				<use xlink:href="img/icons.svg#dialog-password" />
-			</svg>
-			<svg class="current-color icon" slot="register-btn">
-				<use xlink:href="img/icons.svg#contact-new" />
-			</svg>
-		</login-form>
-		<registration-form class="relative z-4">
-			<svg class="current-color icon" slot="submit-btn">
-				<use xlink:href="img/icons.svg#check" />
-			</svg>
-			<svg class="current-color icon" slot="reset-btn">
-				<use xlink:href="img/icons.svg#x" />
-			</svg>
-			<svg class="current-color icon" slot="username-label">
-				<use xlink:href="img/icons.svg#avatar-default" />
-			</svg>
-			<svg class="current-color icon" slot="password-label">
-				<use xlink:href="img/icons.svg#dialog-password" />
-			</svg>
-			<svg class="current-color icon" slot="login-btn">
-				<use xlink:href="img/icons.svg#sign-in" />
-			</svg>
-		</registration-form>
-		<button type="button" is="share-button" class="round shadow fixed z-4" aria-label="Share">
+		<button type="button" class="btn btn-primary fixed z-4 bottom left round shadow" id="create-btn" data-show-modal="#add-place-dialog" accesskey="+" title="Add New Place">
+				<svg class="current-color icon" fill="currentColor" height="20" width="20">
+					<use xlink:href="/img/icons.svg#plus"></use>
+				</svg>
+			</button>
+		<button type="button" is="share-button" class="btn btn-primary round shadow fixed z-4" aria-label="Share" hidden="">
 			<svg class="current-color icon">
 				<use xlink:href="/img/icons.svg#public-share"></use>
 			</svg>
