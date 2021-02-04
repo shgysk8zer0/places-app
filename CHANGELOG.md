@@ -13,5 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Complete rewrite for compatibility with places data requirements
   - Add `<leaflet-map>` to show coordinates, and update coordinates on map pan
   - Update for better consistency with other apps
+  - Update icons
 
 <!-- markdownlint-restore -->
