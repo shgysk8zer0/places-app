@@ -1,4 +1,3 @@
-/.netlify/
 *.sql
 /img/icons.svg
 *.min.*
