@@ -37,10 +37,18 @@ if (typeof GA === 'string' && GA.length !== 0) {
 	});
 }
 
-
 $.ready.then(async () => {
 	init().catch(console.error);
 	$('#identifier').value(uuidv6());
+
+	$('#place-address-locality').change(({ target: { value }}) => {
+		if (value.length !== 0) {
+			const city = document.querySelector(`#cities > [value="${CSS.escape(value)}"][data-postal-code]`);
+			if (city instanceof HTMLElement) {
+				$('#place-postal-code').value(city.dataset.postalCode);
+			}
+		}
+	});
 
 	$('form[name="addPlace"]').submit(async event => {
 		event.preventDefault();
@@ -53,6 +61,7 @@ $.ready.then(async () => {
 			'telephone': body.get('telephone') || null,
 			'email': body.get('email') || null,
 			'description': body.get('description') || null,
+			'sameAs': body.getAll('sameAs[]').filter(url => typeof url === 'string' && url.length !== 0),
 			'address': {
 				'@type': 'PostalAddress',
 				'streetAddress': body.get('address[streetAddress]') || null,
@@ -186,8 +195,25 @@ $.ready.then(async () => {
 		document.querySelector('leaflet-map').locate({ setView: true, maxZoom: 17 });
 	});
 
-	getCustomElement('leaflet-marker').then(LeafletMarker => {
-		$('leaflet-map').on('pan', async ({ target }) => {
+	Promise.all([
+		getCustomElement('leaflet-map'),
+		getCustomElement('leaflet-marker'),
+	]).then(([LeafletMap, LeafletMarker]) => {
+		const map = new LeafletMap({
+			latitude: 35.664676,
+			longitude: -118.450685,
+			crossOrigin: 'anonymous',
+			detectRetina: true,
+			zoom: 12,
+			maxZoom: 19,
+			minZoom: 9,
+			loading: 'lazy',
+		});
+		map.id = 'map';
+		map.classList.add('custom-element', 'contain-content', 'relative', 'z-1');
+		document.getElementById('map-placeholder').replaceWith(map);
+
+		$(map).on('pan', async ({ target }) => {
 			const { lat: latitude, lng: longitude } = target.map.getCenter();
 			const marker = new LeafletMarker({ latitude, longitude,
 				icon: 'https://cdn.kernvalley.us/img/adwaita-icons/actions/find-location.svg' });
@@ -196,5 +222,6 @@ $.ready.then(async () => {
 			$('#longitude').value(longitude.toFixed(8));
 			target.replaceChildren(marker);
 		}, { passive: true });
+
 	});
 });

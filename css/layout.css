@@ -32,6 +32,23 @@ button.btn[is="share-button"] {
 	width: 200px;
 }
 
+#place-address-locality, #place-address-region, #place-postal-code {
+	display: inline-block;
+	width: auto;
+}
+
+#place-address-region {
+	width: 4ch;
+}
+
+#place-postal-code {
+	width: 8ch;
+}
+
+#add-place-dialog details.accordion > :not(summary) {
+	padding: 0.6em 0.3em;
+}
+
 @media (max-width: 800px) {
 	.mobile-hidden {
 		display: none;
