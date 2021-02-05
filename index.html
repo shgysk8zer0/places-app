@@ -43,8 +43,8 @@
 		<script src="https://cdn.polyfill.io/v3/polyfill.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer="" nomodule=""></script>
 		<script src="https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer" integrity="sha384-xyhN4T4+9VPh8uXl6uWjGzsqwNXN9C2tla8b6zSrSqYlMFUoeCdoxiEJU0js+GNE" async="" defer="" nomodule=""></script>
 		<script src="https://cdn.kernvalley.us/components/leaflet/map.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer=""></script>
-		<script type="module" src="/js/index.js" referrerpolicy="no-referrer" async="" defer=""></script>
-		<!-- <script src="/js/index.min.js" referrerpolicy="no-referrer" async="" defer=""></script> -->
+		<!-- <script type="module" src="/js/index.js" referrerpolicy="no-referrer" async="" defer=""></script> -->
+		<script src="/js/index.min.js" referrerpolicy="no-referrer" async="" defer=""></script>
 		<link rel="manifest" href="/manifest.json" />
 		<link rel="license" href="/LICENSE" />
 		<link rel="icon" href="/img/favicon.svg" type="image/svg+xml" sizes="any" />
@@ -214,7 +214,7 @@
 			</div>
 		</footer>
 		<dialog id="add-place-dialog">
-			<form name="addPlace" autocomplete="off">
+			<form name="addPlace" id="add-place" autocomplete="off">
 				<input type="hidden" name="identifier" id="identifier" />
 				<fieldset id="basic-section" class="no-border">
 					<legend hidden="">Basic Info</legend>
@@ -426,10 +426,17 @@
 						</div>
 						<br />
 						<div class="flex row space-evenly">
-							<button type="button" class="btn btn-primary" id="get-geo">
+							<button type="button" class="btn btn-outline btn-primary-outline" title="Full Screen Map" data-full-screen="leaflet-map">
+								<svg class="icon" height="20" width="20" fill="currentColor" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#screen-full"></use>
+								</svg>
+								<span>Full Screen Map</span>
+							</button>
+							<button type="button" class="btn btn-outline btn-primary-outline" id="get-geo">
 								<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 									<use xlink:href="/img/icons.svg#find-location" />
 								</svg>
+								<span>My Location</span>
 							</button>
 						</div>
 						<br />
@@ -441,7 +448,7 @@
 					<legend hidden="">Business Hours</legend>
 					<!-- https://schema.org/OpeningHoursSpecification -->
 					<details id="business-hours" class="accordion">
-						<summary>Daily Hours</summary>
+						<summary>Business Hours</summary>
 						<div class="form-group">
 							<label>
 								<span>Sun<span class="mobile-hidden">day</span></span>
