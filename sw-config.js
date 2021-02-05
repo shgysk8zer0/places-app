@@ -38,6 +38,8 @@ const config = {
 		'https://cdn.kernvalley.us/img/adwaita-icons/actions/find-location.svg',
 	].map(path => new URL(path, location.origin)),
 	allowed: [
+		'https://www.google-analytics.com/analytics.js',
+		'https://www.googletagmanager.com/gtag/js',
 		'https://maps.wikimedia.org/osm-intl/',
 		'https://i.imgur.com/',
 		/https:\/\/\w+\.githubusercontent\.com\/u\/*/,
