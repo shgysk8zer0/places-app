@@ -23,16 +23,23 @@ $(document.documentElement).toggleClass({
 
 if (typeof GA === 'string' && GA.length !== 0) {
 	requestIdleCallback(() => {
-		importGa(GA).then(async ({ ga }) => {
-			ga('create', GA, 'auto');
-			ga('set', 'transport', 'beacon');
-			ga('send', 'pageview');
-
-			await $.ready;
+		importGa(GA).then(async ({ set, pageView, send, ready }) => {
+			await Promise.allSettled([$.ready, ready()]);
+			window.ga = (...args) => args[0] instanceof Function ? args[0]() : console.info(args);
+			set('transport', 'beacon');
+			pageView(location.pathname);
 
 			$('a[rel~="external"]').click(externalHandler, { passive: true, capture: true });
 			$('a[href^="tel:"]').click(telHandler, { passive: true, capture: true });
 			$('a[href^="mailto:"]').click(mailtoHandler, { passive: true, capture: true });
+
+			$(document.forms).submit(({ target }) => {
+				send({
+					eventCategory: 'form',
+					eventAction: 'submit',
+					eventLabel: target.name || target.id,
+				});
+			}, { passive: true, capture: true });
 		});
 	});
 }
@@ -207,13 +214,15 @@ $.ready.then(async () => {
 			zoom: 12,
 			maxZoom: 19,
 			minZoom: 9,
+			zoomControl: true,
 			loading: 'lazy',
 		});
 		map.id = 'map';
 		map.classList.add('custom-element', 'contain-content', 'relative', 'z-1');
-		document.getElementById('map-placeholder').replaceWith(map);
+		document.getElementById('map-placeholder').append(map);
 
 		$(map).on('pan', async ({ target }) => {
+			await target.ready;
 			const { lat: latitude, lng: longitude } = target.map.getCenter();
 			const marker = new LeafletMarker({ latitude, longitude,
 				icon: 'https://cdn.kernvalley.us/img/adwaita-icons/actions/find-location.svg' });
@@ -222,6 +231,5 @@ $.ready.then(async () => {
 			$('#longitude').value(longitude.toFixed(8));
 			target.replaceChildren(marker);
 		}, { passive: true });
-
 	});
 });
