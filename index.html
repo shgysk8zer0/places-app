@@ -30,9 +30,9 @@
 		<meta name="twitter:image" content="https://i.imgur.com/PPSaaYpl.jpg" />
 		<!-- /Twitter -->
 		<!-- /Social data -->
-		<meta name="msapplication-TileColor" content="#528ff9" />
+		<meta name="msapplication-TileColor" content="#007bff" />
 		<meta name="msapplication-config" content="/browserconfig.xml" />
-		<meta name="theme-color" content="#528ff9" />
+		<meta name="theme-color" content="#007bff" />
 		<title itemprop="name headline">Places | KernValley.us</title>
 		<link rel="preconnect" href="https://maps.wikimedia.org" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="preconnect" href="https://api.github.com" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -149,28 +149,28 @@
 					</a>
 				</div>
 				<div class="inline-block footer-links">
-						<a class="block" href="https://www.facebook.com/KernValley.us/" target="_blank" rel="external noopener noreferrer" itemprop="sameAs">
-							<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
-								<use xlink:href="/img/icons.svg#facebook"></use>
-							</svg>
-							<span>Facebook</span>
-						</a>
-						<a class="block" href="https://twitter.com/kern_valley" target="_blank" rel="external noopener noreferrer" itemprop="sameAs">
-							<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
-								<use xlink:href="/img/icons.svg#twitter"></use>
-							</svg>
-							<span>Twitter</span>
-						</a>
-						<a class="block" href="https://instagram.com/kernvalley_us/" target="_blank" rel="noopener noreferrer external" itemprop="sameAs">
-							<img src="https://cdn.kernvalley.us/img/logos/instagram.svg" class="social-icon" loading="lazy" decoding="async" crossorigin="anonymous" referrerpolicy="no-referrer" alt="" width="20" height="20" />
-							<span>Instagram</span>
-						</a>
-						<a class="block" href="https://www.linkedin.com/company/18644791/" target="_blank" rel="external noopener" itemprop="sameAs">
-							<svg class="current-color icon social-icon" width="24" height="24" fill="curentColor" role="img" aria-hidden="true">
-								<use xlink:href="/img/icons.svg#linkedin"></use>
-							</svg>
-							<span>LinkedIn</span>
-						</a>
+					<a class="block" href="https://www.facebook.com/KernValley.us/" target="_blank" rel="external noopener noreferrer" itemprop="sameAs">
+						<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#facebook"></use>
+						</svg>
+						<span>Facebook</span>
+					</a>
+					<a class="block" href="https://twitter.com/kern_valley" target="_blank" rel="external noopener noreferrer" itemprop="sameAs">
+						<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#twitter"></use>
+						</svg>
+						<span>Twitter</span>
+					</a>
+					<a class="block" href="https://instagram.com/kernvalley_us/" target="_blank" rel="noopener noreferrer external" itemprop="sameAs">
+						<img src="https://cdn.kernvalley.us/img/logos/instagram.svg" class="social-icon" loading="lazy" decoding="async" crossorigin="anonymous" referrerpolicy="no-referrer" alt="" width="20" height="20" />
+						<span>Instagram</span>
+					</a>
+					<a class="block" href="https://www.linkedin.com/company/18644791/" target="_blank" rel="external noopener" itemprop="sameAs">
+						<svg class="current-color icon social-icon" width="24" height="24" fill="curentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#linkedin"></use>
+						</svg>
+						<span>LinkedIn</span>
+					</a>
 				</div>
 				<div class="inline-block">
 					<a class="block" href="https://github.com/kernvalley/" target="_blank" rel="external noopener noreferrer">
@@ -216,210 +216,232 @@
 		<dialog id="add-place-dialog">
 			<form name="addPlace" autocomplete="off">
 				<input type="hidden" name="identifier" id="identifier" />
-				<fieldset>
-					<legend>Address</legend>
+				<fieldset id="basic-section" class="no-border">
+					<legend hidden="">Basic Info</legend>
+					<details class="accordion" open="">
+						<summary>Basic Contact Info</summary>
+						<div class="form-group">
+							<label for="place-name" class="input-label required">Name</label>
+							<input type="text" name="name" id="place-name" class="input" placeholder="Name" autocomplete="off" required="" />
+						</div>
+						<div class="form-group">
+							<label for="place-type" class="input-label required">Place Type</label>
+							<select name="@type" class="input" id="place-type" required="">
+								<optgroup label="Food Service">
+									<option value="Restaurant">Restaurant</option>
+									<option value="FastFoodRestaurant">Fast Food</option>
+									<option value="CafeOrCoffeeShop">Cafe or Coffee Shop</option>
+									<option value="BarOrPub">Bar or Pub</option>
+									<option value="FoodEstablishment">Other Food Business</option>
+								</optgroup>
+								<optgroup label="Shopping">
+									<option value="GroceryStore">Grocery Store</option>
+									<option value="ConvenienceStore">Convenience Store</option>
+									<option value="HomeGoodsStore">Home Goods Store</option>
+									<option value="Pharmacy">Pharmacy</option>
+									<option value="LiquorStore">Liquor Store</option>
+									<option value="ClothingStore">Clothing Store</option>
+									<option value="ShoeStore">Shoe Store</option>
+									<option value="DepartmentStore">Department Store</option>
+									<option value="WholesaleStore">Wholesale Store</option>
+									<option value="OfficeEquipmentStore">Office Equipment Store</option>
+									<option value="OutletStore">Outlet Store</option>
+									<option value="SportingGoodsStore">Sporting Goods Store</option>
+									<option value="HardwareStore">Hardware Store</option>
+									<option value="GardenStore">Garden Store</option>
+									<option value="HobbyShop">Hobby Shop</option>
+									<option value="Florist">Florist</option>
+									<option value="FurnitureStore">Furniture Store</option>
+									<option value="ElectronicsStore">Electronics Store</option>
+									<option value="ComputerStore">Computer Store</option>
+									<option value="MobilePhoneStore">Mobile Phone Store</option>
+									<option value="GasStation">Gas Station</option>
+									<option value="BikeStore">Bike Store</option>
+									<option value="JewelryStore">Jewelry Store</option>
+									<option value="PawnShop">Pawn Shop</option>
+									<option value="Store">Other Store</option>
+								</optgroup>
+								<optgroup label="Financial and Legal Services">
+									<option value="BankOrCreditUnion">Bank or Credit Union</option>
+									<option value="AutomatedTeller">ATM</option>
+									<option value="FinancialService">Other Financial Service</option>
+									<option value="LegalService">Legal Service</option>
+									<option value="Attorney">Attorney</option>
+									<option value="Notary">Notary</option>
+								</optgroup>
+								<optgroup label="Entertainment and Activities">
+									<option value="BowlingAlley">Bowling Alley</option>
+									<option value="Campground">Campground</option>
+									<option value="RVPark">RV Park</option>
+									<option value="MovieTheater">Movie Theater</option>
+									<option value="PerformingArtsTheater">Performing Arts Theater</option>
+									<option value="MovieRentalStore">Movie Rental Store</option>
+									<option value="MusicStore">Music Store</option>
+									<option value="Park">Park</option>
+									<option value="Playground">Playground</option>
+									<option value="StadiumOrArena">Stadium or Arena</option>
+									<option value="Museum">Museum</option>
+									<option value="ArtGallery">Art Gallery</option>
+									<option value="EventVenue">Event Venue</option>
+									<option value="TouristAttraction">Tourist Attraction</option>
+									<option value="LandmarksOrHistoricalBuildings">Landmark or Historical Building</option>
+									<option value="EntertainmentBusiness">Other Entertainment Business</option>
+								</optgroup>
+								<optgroup label="Lodging">
+									<option value="Motel">Motel</option>
+									<option value="Resort">Resort</option>
+									<option value="LodgingBusiness">Other Lodging Business</option>
+								</optgroup>
+								<optgroup label="Health and Beauty">
+									<option value="BeautySalon">Beauty Salon</option>
+									<option value="DaySpa">Day Spa</option>
+									<option value="HairSalon">Hair Salon</option>
+									<option value="HealthClub">Health Club</option>
+									<option value="NailSalon">Nail Salon</option>
+									<option value="TattooParlor">Tattoo Parlor</option>
+									<option value="HealthAndBeauty">Other Health / Beauty</option>
+								</optgroup>
+								<optgroup label="Automotive">
+									<option value="AutoPartsStore">Auto Parts Store</option>
+									<option value="AutoWash">Car Wash</option>
+									<option value="AutoRepair">Auto Repair</option>
+									<option value="MotorcycleRepair">Motorcycle Repair</option>
+									<option value="AutoBodyShop">Auto Body Shop</option>
+									<option value="AutoDealer">Auto Dealer</option>
+									<option value="MotorcycleDealer">Motorcycle Dealer</option>
+									<option value="AutoRental">Auto Rental</option>
+									<option value="TireShop">Tire Shop</option>
+									<option value="AutomotiveBusiness">Other Automotive Business</option>
+								</optgroup>
+								<optgroup label="Home Repair and Construction">
+									<option value="Electrician">Electrician</option>
+									<option value="Plumber">Plumber</option>
+									<option value="Locksmith">Locksmith</option>
+									<option value="HousePainter">House Painter</option>
+									<option value="GeneralContractor">General Contractor</option>
+									<option value="RoofingContractor">Roofing Contractor</option>
+									<option value="HVACBusiness">HVAC Business</option>
+									<option value="MovingCompany">Moving Company</option>
+								</optgroup>
+								<optgroup label="Medical and Emergency Services">
+									<option value="Hospital">Hospital</option>
+									<option value="PoliceStation">Police Station</option>
+									<option value="FireStation">Fire Station</option>
+									<option value="EmergencyService">Other Emergency Service</option>
+									<option value="Dentist">Dentist</option>
+									<option value="DiagnosticLab">Diagnostic Lab</option>
+									<option value="MedicalClinic">Medical Clinic</option>
+									<option value="Physician">Physician</option>
+									<option value="MedicalBusiness">Medical Business</option>
+									<option value="VeterinaryCare">Veterinary Care</option>
+								</optgroup>
+								<optgroup label="Educational">
+									<option value="Library">Library</option>
+									<option value="Preschool">Preschool</option>
+									<option value="ElementarySchool">Elementary School</option>
+									<option value="MiddleSchool">Middle School</option>
+									<option value="HighSchool">High School</option>
+									<option value="CollegeOrUniversity">College or University</option>
+									<option value="School">Other School</option>
+									<option value="EducationalOrganization">Other Educational Service</option>
+								</optgroup>
+								<optgroup label="Misc Business or Place">
+									<option value="ChildCare">Child Care</option>
+									<option value="DryCleaningOrLaundry">Dry Cleaning or Laundry</option>
+									<option value="Cemetary">Cemetary</option>
+									<option value="Crematorium">Crematorium</option>
+									<option value="AnimalShelter">Animal Shelter</option>
+									<option value="RealEstateAgent">Real Estate Agent</option>
+									<option value="EmploymentAgency">Employment Agency</option>
+									<option value="GovernmentOffice">Government Office</option>
+									<option value="PostOffice">Post Office</option>
+									<option value="RecyclingCenter">Recycling Center</option>
+									<option value="ProfessionalService">Professional Service</option>
+									<option value="TouristInformationCenter">Tourist Information Center</option>
+									<option value="TravelAgency">Travel Agency</option>
+									<option value="SelfStorage">Self Storage Facility</option>
+									<option value="Church">Church</option>
+									<option value="CivicStructure">Civic Structure</option>
+									<option value="LocalBusiness" selected="">Other Business</option>
+								</optgroup>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="place-tel" class="input-label">Telephone</label>
+							<input type="tel" name="telephone" id="place-tel" class="input" placeholder="+1-555-555-5555" />
+						</div>
+						<div class="form-group">
+							<label for="place-email" class="input-label">Email</label>
+							<input type="email" name="email" id="place-email" class="input" placeholder="user@example.com" />
+						</div>
+						<div class="form-group">
+							<label for="place-url" class="input-label">Website</label>
+							<input type="url" name="url" id="place-url" class="input" placeholder="http://example.com" />
+						</div>
+						<div class="form-group">
+							<label for="place-description" class="input-label">Description</label>
+							<textarea name="description" id="place-description" class="input" placeholder="Description"></textarea>
+						</div>
+					</details>
+				</fieldset>
+				<fieldset id="address-section" class="no-border">
+					<legend hidden="">Address</legend>
 					<datalist id="cities">
-						<option value="Lake Isabella" />
-						<option value="Kernville" />
-						<option value="Bodfish" />
+						<option value="Lake Isabella" data-postal-code="93240" />
+						<option value="Kernville" data-postal-code="93238" />
+						<option value="Bodfish" data-postal-code="93205" />
 						<option value="Onyx" />
 						<option value="Weldon" />
-						<option value="Wofford Heights" />
-						<option value="Mountain Mesa" />
-						<option value="South Lake" />
+						<option value="Wofford Heights" data-postal-code="93285" />
+						<option value="Mountain Mesa" data-postal-code="93240" />
+						<option value="South Lake" data-postal-code="93240" />
 					</datalist>
-					<div class="form-group">
-						<input type="text" name="name" class="input" placeholder="Name" required="" />
-					</div>
-					<div class="form-group">
-						<select name="@type" class="input" id="type-select" required="">
-							<optgroup label="Food Service">
-								<option value="Restaurant">Restaurant</option>
-								<option value="FastFoodRestaurant">Fast Food</option>
-								<option value="CafeOrCoffeeShop">Cafe or Coffee Shop</option>
-								<option value="BarOrPub">Bar or Pub</option>
-								<option value="FoodEstablishment">Other Food Business</option>
-							</optgroup>
-							<optgroup label="Shopping">
-								<option value="GroceryStore">Grocery Store</option>
-								<option value="ConvenienceStore">Convenience Store</option>
-								<option value="HomeGoodsStore">Home Goods Store</option>
-								<option value="Pharmacy">Pharmacy</option>
-								<option value="LiquorStore">Liquor Store</option>
-								<option value="ClothingStore">Clothing Store</option>
-								<option value="ShoeStore">Shoe Store</option>
-								<option value="DepartmentStore">Department Store</option>
-								<option value="WholesaleStore">Wholesale Store</option>
-								<option value="OfficeEquipmentStore">Office Equipment Store</option>
-								<option value="OutletStore">Outlet Store</option>
-								<option value="SportingGoodsStore">Sporting Goods Store</option>
-								<option value="HardwareStore">Hardware Store</option>
-								<option value="GardenStore">Garden Store</option>
-								<option value="HobbyShop">Hobby Shop</option>
-								<option value="Florist">Florist</option>
-								<option value="FurnitureStore">Furniture Store</option>
-								<option value="ElectronicsStore">Electronics Store</option>
-								<option value="ComputerStore">Computer Store</option>
-								<option value="MobilePhoneStore">Mobile Phone Store</option>
-								<option value="GasStation">Gas Station</option>
-								<option value="BikeStore">Bike Store</option>
-								<option value="JewelryStore">Jewelry Store</option>
-								<option value="PawnShop">Pawn Shop</option>
-								<option value="Store">Other Store</option>
-							</optgroup>
-							<optgroup label="Financial and Legal Services">
-								<option value="BankOrCreditUnion">Bank or Credit Union</option>
-								<option value="AutomatedTeller">ATM</option>
-								<option value="FinancialService">Other Financial Service</option>
-								<option value="LegalService">Legal Service</option>
-								<option value="Attorney">Attorney</option>
-								<option value="Notary">Notary</option>
-							</optgroup>
-							<optgroup label="Entertainment and Activities">
-								<option value="BowlingAlley">Bowling Alley</option>
-								<option value="Campground">Campground</option>
-								<option value="RVPark">RV Park</option>
-								<option value="MovieTheater">Movie Theater</option>
-								<option value="PerformingArtsTheater">Performing Arts Theater</option>
-								<option value="MovieRentalStore">Movie Rental Store</option>
-								<option value="MusicStore">Music Store</option>
-								<option value="Park">Park</option>
-								<option value="Playground">Playground</option>
-								<option value="StadiumOrArena">Stadium or Arena</option>
-								<option value="Museum">Museum</option>
-								<option value="ArtGallery">Art Gallery</option>
-								<option value="EventVenue">Event Venue</option>
-								<option value="TouristAttraction">Tourist Attraction</option>
-								<option value="LandmarksOrHistoricalBuildings">Landmark or Historical Building</option>
-								<option value="EntertainmentBusiness">Other Entertainment Business</option>
-							</optgroup>
-							<optgroup label="Lodging">
-								<option value="Motel">Motel</option>
-								<option value="Resort">Resort</option>
-								<option value="LodgingBusiness">Other Lodging Business</option>
-							</optgroup>
-							<optgroup label="Health and Beauty">
-								<option value="BeautySalon">Beauty Salon</option>
-								<option value="DaySpa">Day Spa</option>
-								<option value="HairSalon">Hair Salon</option>
-								<option value="HealthClub">Health Club</option>
-								<option value="NailSalon">Nail Salon</option>
-								<option value="TattooParlor">Tattoo Parlor</option>
-								<option value="HealthAndBeauty">Other Health / Beauty</option>
-							</optgroup>
-							<optgroup label="Automotive">
-								<option value="AutoPartsStore">Auto Parts Store</option>
-								<option value="AutoWash">Car Wash</option>
-								<option value="AutoRepair">Auto Repair</option>
-								<option value="MotorcycleRepair">Motorcycle Repair</option>
-								<option value="AutoBodyShop">Auto Body Shop</option>
-								<option value="AutoDealer">Auto Dealer</option>
-								<option value="MotorcycleDealer">Motorcycle Dealer</option>
-								<option value="AutoRental">Auto Rental</option>
-								<option value="TireShop">Tire Shop</option>
-								<option value="AutomotiveBusiness">Other Automotive Business</option>
-							</optgroup>
-							<optgroup label="Home Repair and Construction">
-								<option value="Electrician">Electrician</option>
-								<option value="Plumber">Plumber</option>
-								<option value="Locksmith">Locksmith</option>
-								<option value="HousePainter">House Painter</option>
-								<option value="GeneralContractor">General Contractor</option>
-								<option value="RoofingContractor">Roofing Contractor</option>
-								<option value="HVACBusiness">HVAC Business</option>
-								<option value="MovingCompany">Moving Company</option>
-							</optgroup>
-							<optgroup label="Medical and Emergency Services">
-								<option value="Hospital">Hospital</option>
-								<option value="PoliceStation">Police Station</option>
-								<option value="FireStation">Fire Station</option>
-								<option value="EmergencyService">Other Emergency Service</option>
-								<option value="Dentist">Dentist</option>
-								<option value="DiagnosticLab">Diagnostic Lab</option>
-								<option value="MedicalClinic">Medical Clinic</option>
-								<option value="Physician">Physician</option>
-								<option value="MedicalBusiness">Medical Business</option>
-								<option value="VeterinaryCare">Veterinary Care</option>
-							</optgroup>
-							<optgroup label="Educational">
-								<option value="Library">Library</option>
-								<option value="Preschool">Preschool</option>
-								<option value="ElementarySchool">Elementary School</option>
-								<option value="MiddleSchool">Middle School</option>
-								<option value="HighSchool">High School</option>
-								<option value="CollegeOrUniversity">College or University</option>
-								<option value="School">Other School</option>
-								<option value="EducationalOrganization">Other Educational Service</option>
-							</optgroup>
-							<optgroup label="Misc Business or Place">
-								<option value="ChildCare">Child Care</option>
-								<option value="DryCleaningOrLaundry">Dry Cleaning or Laundry</option>
-								<option value="Cemetary">Cemetary</option>
-								<option value="Crematorium">Crematorium</option>
-								<option value="AnimalShelter">Animal Shelter</option>
-								<option value="RealEstateAgent">Real Estate Agent</option>
-								<option value="EmploymentAgency">Employment Agency</option>
-								<option value="GovernmentOffice">Government Office</option>
-								<option value="PostOffice">Post Office</option>
-								<option value="RecyclingCenter">Recycling Center</option>
-								<option value="ProfessionalService">Professional Service</option>
-								<option value="TouristInformationCenter">Tourist Information Center</option>
-								<option value="TravelAgency">Travel Agency</option>
-								<option value="SelfStorage">Self Storage Facility</option>
-								<option value="Church">Church</option>
-								<option value="CivicStructure">Civic Structure</option>
-								<option value="LocalBusiness" selected="">Other Business</option>
-							</optgroup>
-						</select>
-					</div>
-					<div class="form-group">
-						<input type="tel" name="telephone" class="input" placeholder="+1-555-555-5555" />
-					</div>
-					<div class="form-group">
-						<input type="email" name="email" class="input" placeholder="user@example.com" />
-					</div>
-					<div class="form-group">
-						<input type="url" name="url" class="input" placeholder="http://example.com" />
-					</div>
-					<div class="form-group">
-						<textarea name="description" class="input" placeholder="Description"></textarea>
-					</div>
-					<div class="form-group">
-						<input name="address[streetAddress]" class="input" placeholder="123 Some St" />
-						<input name="address[postOfficeBoxNumber]" class="input" placeholder="PO Box ####" />
-						<input name="address[addressLocality]" list="cities" class="input" placeholder="City" pattern="[A-Z][A-z\. ]+" required="" />
-						<input name="address[addressRegion]" class="input" value="CA" />
-						<input type="number" name="address[postalCode]" class="input" placeholder="#####" min="10000" max="99999" list="zips" required="" />
-					</div>
+					<details class="accordion overflow-hidden" open="">
+						<summary><span class="mobile-hidden">Physical and Postal </span>Address</summary>
+						<div class="form-group overflow-auto">
+							<input name="address[streetAddress]" id="place-street-address" class="input" placeholder="123 Some St" autocomplete="off" />
+							<input type="number" min="1" max="99999" name="address[postOfficeBoxNumber]" id="place-po-box" class="input" placeholder="PO Box ####" autocomplete="off" />
+							<input name="address[addressLocality]" list="cities" id="place-address-locality" class="input inline-block" placeholder="City" pattern="[A-Z][A-z\. ]+" autocomplete="off" required="" />
+							<span>,</span>
+							<input name="address[addressRegion]" id="place-address-region" class="input inline-block" value="CA" required="" />
+							<input type="text" name="address[postalCode]" id="place-postal-code" class="input inline-block" inputmode="numeric" placeholder="#####" pattern="\d{5}" list="zips" autocomplete="off" required="" />
+						</div>
+					</details>
 				</fieldset>
-				<fieldset>
-					<legend>Coordinates</legend>
-					<div class="form-group">
-						<input type="number" id="latitude" class="input" name="geo[latitude]" step="0.00000001" placeholder="Latitude"/>
-					</div>
-					<div class="form-group">
-						<input type="number" id="longitude" class="input" name="geo[longitude]" step="0.00000001" placeholder="Longitude" />
-					</div>
-					<div class="form-group">
-						<input type="number" id="elevation" class="input" name="geo[elevation]" placeholder="Elevation (meters)" />
-					</div>
-					<br />
-					<div class="flex row space-evenly">
-						<button type="button" class="btn btn-primary" id="get-geo">
-							<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
-								<use xlink:href="/img/icons.svg#find-location" />
-							</svg>
-						</button>
-					</div>
-					<br />
-					<leaflet-map center="35.664676,-118.450685" id="map" class="relative custom-element contain-content z-1" zoom="12" maxzoom="19" minzoom="9" crossorigin="annonymous" detectretina="" zoomcontrol=""></leaflet-map>
-					<br />
+				<fieldset id="geo-section" class="no-border">
+					<legend hidden="">Coordinates</legend>
+					<details class="accordion" open="">
+						<summary>GPS Coordinates</summary>
+						<div class="form-group">
+							<label for="latitude" class="input-label">Latitude</label>
+							<input type="number" id="latitude" class="input" name="geo[latitude]" step="0.00000001" placeholder="Latitude"/>
+						</div>
+						<div class="form-group">
+							<label for="longitude" class="input-label">Longitude</label>
+							<input type="number" id="longitude" class="input" name="geo[longitude]" step="0.00000001" placeholder="Longitude" />
+						</div>
+						<div class="form-group">
+							<label for="elevation" class="input-label">Elevation</label>
+							<input type="number" id="elevation" class="input" name="geo[elevation]" placeholder="Elevation (meters)" />
+						</div>
+						<br />
+						<div class="flex row space-evenly">
+							<button type="button" class="btn btn-primary" id="get-geo">
+								<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#find-location" />
+								</svg>
+							</button>
+						</div>
+						<br />
+						<div id="map-placeholder"></div>
+						<br />
+					</details>
 				</fieldset>
-				<fieldset id="hours-section">
-					<legend>Business Hours</legend>
+				<fieldset id="hours-section" class="no-border">
+					<legend hidden="">Business Hours</legend>
 					<!-- https://schema.org/OpeningHoursSpecification -->
-					<details id="business-hours" class="accordion" open="">
-						<summary class="btn btn-primary block">Daily Hours</summary>
+					<details id="business-hours" class="accordion">
+						<summary>Daily Hours</summary>
 						<div class="form-group">
 							<label>
 								<span>Sun<span class="mobile-hidden">day</span></span>
@@ -478,9 +500,71 @@
 						</div>
 					</details>
 				</fieldset>
-				<div class="form-group">
-					<input type="file" name="image" accept="image/*" class="input" />
-				</div>
+				<fieldset id="social-section" class="no-border">
+					<legend hidden="">Social Networks</legend>
+					<details class="accordion">
+						<summary>Social Network URLs</summary>
+						<div class="form-group">
+							<label for="fb-link" class="input-label">
+								<span>Facebook</span>
+								<svg class="icon" width="20" height="20" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#facebook"></use>
+								</svg>
+							</label>
+							<input type="url" name="sameAs[]" id="fb-link" class="input" placeholder="https://www.facebook.com/..." />
+						</div>
+						<div class="form-group">
+							<label for="twitter-link" class="input-label">
+								<span>Twitter</span>
+								<svg class="icon" width="20" height="20" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#twitter"></use>
+								</svg>
+							</label>
+							<input type="url" name="sameAs[]" id="twitter-link" class="input" placeholder="https://twitter.com/..." />
+						</div>
+						<div class="form-group">
+							<label for="ig-link" class="input-label">
+								<span>Instagram</span>
+								<img src="https://cdn.kernvalley.us/img/logos/instagram.svg" class="icon" height="20" width="20" crossorigin="anonymous" referrerpolicy="no-referrer" loading="lazy" decoding="async" alt="IG" />
+							</label>
+							<input type="url" name="sameAs[]" id="ig-link" class="input" placeholder="https://instagram.com/..." />
+						</div>
+						<div class="form-group">
+							<label for="yt-link" class="input-label">
+								<span>YouTube</span>
+								<svg class="icon" width="20" height="20" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#youtube"></use>
+								</svg>
+							</label>
+							<input type="url" name="sameAs[]" id="yt-link" class="input" placeholder="https://www.youtube.com/..." />
+						</div>
+						<div class="form-group">
+							<label for="li-link" class="input-label">
+								<span>LinkedIn</span>
+								<svg class="icon" width="20" height="20" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#linkedin"></use>
+								</svg>
+							</label>
+							<input type="url" name="sameAs[]" id="li-link" class="input" placeholder="https://www.linkedin.com/..." />
+						</div>
+						<div class="form-group">
+							<label for="yelp-link" class="input-label">
+								<span>Yelp</span>
+								<svg class="icon" width="20" height="20" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#yelp"></use>
+								</svg>
+							</label>
+							<input type="url" name="sameAs[]" id="yelp-link" class="input" placeholder="https://www.yelp.com/..." />
+						</div>
+					</details>
+				</fieldset>
+				<fieldset id="img-section" class="no-border">
+					<legend hidden="">Place Image</legend>
+					<div class="form-group">
+						<label for="place-img" class="input-label">Image</label>
+						<input type="file" name="image" accept="image/*" class="input" />
+					</div>
+				</fieldset>
 				<hr />
 				<div id="btn-container" class="btns flex row no-wrap">
 					<button type="submit" class="btn btn-accept grow-1">
