@@ -43,8 +43,8 @@
 		<script src="https://cdn.polyfill.io/v3/polyfill.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer="" nomodule=""></script>
 		<script src="https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer" integrity="sha384-xyhN4T4+9VPh8uXl6uWjGzsqwNXN9C2tla8b6zSrSqYlMFUoeCdoxiEJU0js+GNE" async="" defer="" nomodule=""></script>
 		<script src="https://cdn.kernvalley.us/components/leaflet/map.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer=""></script>
-		<!-- <script type="module" src="/js/index.js" referrerpolicy="no-referrer" async="" defer=""></script> -->
-		<script src="/js/index.min.js" referrerpolicy="no-referrer" async="" defer=""></script>
+		<script type="module" src="/js/index.js" referrerpolicy="no-referrer" async="" defer=""></script>
+		<!-- <script src="/js/index.min.js" referrerpolicy="no-referrer" async="" defer=""></script> -->
 		<link rel="manifest" href="/manifest.json" />
 		<link rel="license" href="/LICENSE" />
 		<link rel="icon" href="/img/favicon.svg" type="image/svg+xml" sizes="any" />
@@ -54,8 +54,8 @@
 		<link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#528ff9" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="preload" href="/img/icons.svg" as="image" type="image/svg+xml" />
-		<!-- <link rel="stylesheet" href="/css/index.css" referrerpolicy="no-referrer" media="all" /> -->
-		<link rel="stylesheet" href="/css/index.min.css" referrerpolicy="no-referrer" media="all" />
+		<link rel="stylesheet" href="/css/index.css" referrerpolicy="no-referrer" media="all" />
+		<!-- <link rel="stylesheet" href="/css/index.min.css" referrerpolicy="no-referrer" media="all" /> -->
 	</head>
 	<body id="top" class="grid font-main background-primary color-default">
 		<header id="header" hidden=""></header>
@@ -215,6 +215,7 @@
 		</footer>
 		<dialog id="add-place-dialog">
 			<form name="addPlace" autocomplete="off">
+				<input type="hidden" name="identifier" id="identifier" />
 				<fieldset>
 					<legend>Address</legend>
 					<datalist id="cities">
@@ -231,7 +232,7 @@
 						<input type="text" name="name" class="input" placeholder="Name" required="" />
 					</div>
 					<div class="form-group">
-						<select name="@type" class="input" required="">
+						<select name="@type" class="input" id="type-select" required="">
 							<optgroup label="Food Service">
 								<option value="Restaurant">Restaurant</option>
 								<option value="FastFoodRestaurant">Fast Food</option>
@@ -334,7 +335,11 @@
 								<option value="FireStation">Fire Station</option>
 								<option value="EmergencyService">Other Emergency Service</option>
 								<option value="Dentist">Dentist</option>
+								<option value="DiagnosticLab">Diagnostic Lab</option>
+								<option value="MedicalClinic">Medical Clinic</option>
+								<option value="Physician">Physician</option>
 								<option value="MedicalBusiness">Medical Business</option>
+								<option value="VeterinaryCare">Veterinary Care</option>
 							</optgroup>
 							<optgroup label="Educational">
 								<option value="Library">Library</option>
@@ -410,7 +415,7 @@
 					<leaflet-map center="35.664676,-118.450685" id="map" class="relative custom-element contain-content z-1" zoom="12" maxzoom="19" minzoom="9" crossorigin="annonymous" detectretina="" zoomcontrol=""></leaflet-map>
 					<br />
 				</fieldset>
-				<fieldset>
+				<fieldset id="hours-section">
 					<legend>Business Hours</legend>
 					<!-- https://schema.org/OpeningHoursSpecification -->
 					<details id="business-hours" class="accordion" open="">
@@ -529,6 +534,20 @@
 					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
 						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
 						<i itemprop="text" class="block">This data is used for KRV Maps, KRV Guide, serveral other web apps, and is also open source and freely available to the public.</i>
+					</dd>
+				</dl>
+				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
+					<dt class="faq-question">
+						<b title="Question">
+							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#question"></use>
+							</svg>
+						</b>
+						<b><q itemprop="name">Why are some fields disabled for certain types of busiesses, E.G. <q>Veteranry Care</q>?</q></b>
+					</dt>
+					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
+						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
+						<i itemprop="text" class="block">It's an unfortunate consequence of following an existing specification; some types of businesses are considered <q>LocalBusiness</q> types, and others are considered <q>Organization</q>s, and <q>Organization</q>s do not support things like business hours.</i>
 					</dd>
 				</dl>
 				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">

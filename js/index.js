@@ -6,11 +6,13 @@ import 'https://cdn.kernvalley.us/components/github/user.js';
 import 'https://cdn.kernvalley.us/components/pwa/install.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
 import { $, getCustomElement, openWindow } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
+import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
 import { alert, confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
-import { fileToImageObject } from './functions.js';
 import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
+import { fileToImageObject } from './functions.js';
+import { GA, ORG_TYPES } from './consts.js';
 
 $(document.documentElement).toggleClass({
 	'no-js': false,
@@ -19,71 +21,128 @@ $(document.documentElement).toggleClass({
 	'no-details': document.createElement('details') instanceof HTMLUnknownElement,
 });
 
+if (typeof GA === 'string' && GA.length !== 0) {
+	requestIdleCallback(() => {
+		importGa(GA).then(async ({ ga }) => {
+			ga('create', GA, 'auto');
+			ga('set', 'transport', 'beacon');
+			ga('send', 'pageview');
+
+			await $.ready;
+
+			$('a[rel~="external"]').click(externalHandler, { passive: true, capture: true });
+			$('a[href^="tel:"]').click(telHandler, { passive: true, capture: true });
+			$('a[href^="mailto:"]').click(mailtoHandler, { passive: true, capture: true });
+		});
+	});
+}
+
+
 $.ready.then(async () => {
 	init().catch(console.error);
+	$('#identifier').value(uuidv6());
+
+	$('#type-select').change(({ target: { value }}) => {
+		if (ORG_TYPES.includes(value)) {
+			$('#hours-section').disable();
+		} else {
+			$('#hours-section').enable();
+		}
+	});
 
 	$('form[name="addPlace"]').submit(async event => {
 		event.preventDefault();
 		const body = new FormData(event.target);
-		const data = {
-			'@type': body.get('@type') || 'LocalBusiness',
-			'@context': 'https://schema.org',
-			'ideintifier:': uuidv6(),
-			'name': body.get('name'),
-			'telephone': body.get('telephone'),
-			'email': body.get('email'),
-			'description': body.get('description'),
-			'address': {
-				'@type': 'PostalAddress',
-				'streetAddress': body.get('address[streetAddress]'),
-				'postOfficeBoxNumber': body.get('address[postOfficeBoxNumber]'),
-				'addressLocality': body.get('address[addressLocality]'),
-				'addressRegion': body.get('address[addressRegion]'),
-				'postalCode': body.get('address[postalCode]'),
-			},
-			'geo': {
-				'@type': 'GeoCoordinates',
-				'latitude': body.get('geo[latitude]'),
-				'longitude': body.get('geo[longitude]'),
-				'elevation': body.get('geo[altitude]'),
-			},
-			'openingHoursSpecification': [{
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Sunday][opens]'),
-				'closes': body.get('openingHoursSpecification[Sunday][closes]'),
-				'dayOfWeek': 'Sunday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Monday][opens]'),
-				'closes': body.get('openingHoursSpecification[Monday][closes]'),
-				'dayOfWeek': 'Monday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Tuesday][opens]'),
-				'closes': body.get('openingHoursSpecification[Tuesday][closes]'),
-				'dayOfWeek': 'Tuesday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Wednesday][opens]'),
-				'closes': body.get('openingHoursSpecification[Wednesday][closes]'),
-				'dayOfWeek': 'Wednesday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Thursday][opens]'),
-				'closes': body.get('openingHoursSpecification[Thursday][closes]'),
-				'dayOfWeek': 'Thursday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Friday][opens]'),
-				'closes': body.get('openingHoursSpecification[Friday][closes]'),
-				'dayOfWeek': 'Friday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Saturday][opens]'),
-				'closes': body.get('openingHoursSpecification[Saturday][closes]'),
-				'dayOfWeek': 'Saturday',
-			}]
-		};
+		let data;
+
+		if (ORG_TYPES.includes(body.get('@type'))) {
+			data = {
+				'@type': body.get('@type') || 'LocalBusiness',
+				'@context': 'https://schema.org',
+				'ideintifier:': body.get('identifier'),
+				'name': body.get('name'),
+				'telephone': body.get('telephone'),
+				'email': body.get('email'),
+				'description': body.get('description'),
+				'location': {
+					'@type': 'Place',
+					'address': {
+						'@type': 'PostalAddress',
+						'streetAddress': body.get('address[streetAddress]'),
+						'postOfficeBoxNumber': body.get('address[postOfficeBoxNumber]'),
+						'addressLocality': body.get('address[addressLocality]'),
+						'addressRegion': body.get('address[addressRegion]'),
+						'postalCode': body.get('address[postalCode]'),
+					},
+					'geo': {
+						'@type': 'GeoCoordinates',
+						'latitude': body.get('geo[latitude]'),
+						'longitude': body.get('geo[longitude]'),
+						'elevation': body.get('geo[altitude]'),
+					},
+				}
+			};
+		} else {
+			data = {
+				'@type': body.get('@type') || 'LocalBusiness',
+				'@context': 'https://schema.org',
+				'ideintifier:': body.get('identifier'),
+				'name': body.get('name'),
+				'telephone': body.get('telephone'),
+				'email': body.get('email'),
+				'description': body.get('description'),
+				'address': {
+					'@type': 'PostalAddress',
+					'streetAddress': body.get('address[streetAddress]'),
+					'postOfficeBoxNumber': body.get('address[postOfficeBoxNumber]'),
+					'addressLocality': body.get('address[addressLocality]'),
+					'addressRegion': body.get('address[addressRegion]'),
+					'postalCode': body.get('address[postalCode]'),
+				},
+				'geo': {
+					'@type': 'GeoCoordinates',
+					'latitude': body.get('geo[latitude]'),
+					'longitude': body.get('geo[longitude]'),
+					'elevation': body.get('geo[altitude]'),
+				},
+				'openingHoursSpecification': [{
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Sunday][opens]'),
+					'closes': body.get('openingHoursSpecification[Sunday][closes]'),
+					'dayOfWeek': 'Sunday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Monday][opens]'),
+					'closes': body.get('openingHoursSpecification[Monday][closes]'),
+					'dayOfWeek': 'Monday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Tuesday][opens]'),
+					'closes': body.get('openingHoursSpecification[Tuesday][closes]'),
+					'dayOfWeek': 'Tuesday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Wednesday][opens]'),
+					'closes': body.get('openingHoursSpecification[Wednesday][closes]'),
+					'dayOfWeek': 'Wednesday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Thursday][opens]'),
+					'closes': body.get('openingHoursSpecification[Thursday][closes]'),
+					'dayOfWeek': 'Thursday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Friday][opens]'),
+					'closes': body.get('openingHoursSpecification[Friday][closes]'),
+					'dayOfWeek': 'Friday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': body.get('openingHoursSpecification[Saturday][opens]'),
+					'closes': body.get('openingHoursSpecification[Saturday][closes]'),
+					'dayOfWeek': 'Saturday',
+				}]
+			};
+		}
 
 		if (body.has('image')) {
 			data.image = await fileToImageObject(body.get('image'));
@@ -115,7 +174,10 @@ $.ready.then(async () => {
 		}
 	});
 
-	$('form[name="addPlace"]').reset(event => event.target.closest('dialog').close());
+	$('form[name="addPlace"]').reset(({ target }) => {
+		target.closest('dialog').close();
+		$('#identifier').value(uuidv6());
+	}, { passive: true });
 
 	$('#get-geo').click(async () => {
 		await customElements.whenDefined('leaflet-map');

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add limited support for select `"Organization"` types
+
 ### Changed
 - Update page with more content and FAQ
 
