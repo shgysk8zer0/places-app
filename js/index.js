@@ -25,7 +25,6 @@ if (typeof GA === 'string' && GA.length !== 0) {
 	requestIdleCallback(() => {
 		importGa(GA).then(async ({ set, pageView, send, ready }) => {
 			await Promise.allSettled([$.ready, ready()]);
-			window.ga = (...args) => args[0] instanceof Function ? args[0]() : console.info(args);
 			set('transport', 'beacon');
 			pageView(location.pathname);
 
