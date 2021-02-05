@@ -5,7 +5,7 @@ import 'https://cdn.kernvalley.us/components/current-year.js';
 import 'https://cdn.kernvalley.us/components/github/user.js';
 import 'https://cdn.kernvalley.us/components/pwa/install.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
-import { $, getCustomElement, debounce } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
+import { $, getCustomElement, openWindow } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
 import { alert, confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
@@ -49,44 +49,39 @@ $.ready.then(async () => {
 			},
 			'openingHoursSpecification': [{
 				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Monday][opens]'),
-				'closes': body.get('openingHoursSpecification[Monday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Monday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Sunday][opens]'),
 				'closes': body.get('openingHoursSpecification[Sunday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Sunday',
+				'dayOfWeek': 'Sunday',
 			}, {
 				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Monday][opens]'),
 				'closes': body.get('openingHoursSpecification[Monday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Monday',
+				'dayOfWeek': 'Monday',
 			}, {
 				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Tuesday][opens]'),
 				'closes': body.get('openingHoursSpecification[Tuesday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Tuesday',
+				'dayOfWeek': 'Tuesday',
 			}, {
 				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Wednesday][opens]'),
 				'closes': body.get('openingHoursSpecification[Wednesday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Wednesday',
+				'dayOfWeek': 'Wednesday',
 			}, {
 				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Thursday][opens]'),
 				'closes': body.get('openingHoursSpecification[Thursday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Thursday',
+				'dayOfWeek': 'Thursday',
 			}, {
 				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Friday][opens]'),
 				'closes': body.get('openingHoursSpecification[Friday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Friday',
+				'dayOfWeek': 'Friday',
 			}, {
 				'@type': 'OpeningHoursSpecification',
 				'opens': body.get('openingHoursSpecification[Saturday][opens]'),
 				'closes': body.get('openingHoursSpecification[Saturday][closes]'),
-				'dayOfWeek': 'https://scheme.org/Saturday',
+				'dayOfWeek': 'Saturday',
 			}]
 		};
 
@@ -103,13 +98,15 @@ $.ready.then(async () => {
 		}
 
 		const json = JSON.stringify([data], null, 4);
-		const file = new File([json], `${body.get('name')}.json`, { type: 'application/json' });
+		const file = new File([json], `${body.get('name')}.text`, { type: 'text/plain' });
 
 		if (await confirm('Save file?')) {
-			save(file).catch(console.error);
+			await save(file).catch(console.error);
 		} else if (navigator.clipboard && navigator.clipboard.writeText instanceof Function) {
-			navigator.clipboard.writeText(json).then(() => alert('Copied to clipboard')).catch(console.error);
+			await navigator.clipboard.writeText(json).then(() => alert('Copied to clipboard')).catch(console.error);
 		}
+
+		openWindow('https://github.com/kernvalley/places/issues/new/choose', { name: 'GitHub Issues' });
 
 		if (navigator.canShare({ title: 'Kern Valley Place Submission', body: body.get('name'), files: [file] })) {
 			await navigator.share({ title: 'Kern Valley Place Submission', body: body.get('name'), files: [file] }).catch(console.error);
@@ -126,16 +123,14 @@ $.ready.then(async () => {
 	});
 
 	getCustomElement('leaflet-marker').then(LeafletMarker => {
-		$('leaflet-map').on('pan', debounce(async ({ target }) => {
+		$('leaflet-map').on('pan', async ({ target }) => {
 			const { lat: latitude, lng: longitude } = target.map.getCenter();
 			const marker = new LeafletMarker({ latitude, longitude,
 				icon: 'https://cdn.kernvalley.us/img/adwaita-icons/actions/find-location.svg' });
 
-			$('#latitude').value(latitude.toPrecision(8));
-			$('#longitude').value(longitude.toPrecision(8));
+			$('#latitude').value(latitude.toFixed(8));
+			$('#longitude').value(longitude.toFixed(8));
 			target.replaceChildren(marker);
-		}, 150), { passive: true });
+		}, { passive: true });
 	});
-
-	$('#add-place-dialog').showModal();
 });

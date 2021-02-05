@@ -61,62 +61,101 @@
 		<header id="header" hidden=""></header>
 		<nav id="nav" class="background-accent color-alt sticky top shadow z-3 flex row no-wrap">
 			<button type="button" is="app-list" class="btn nav-btn" hidden="">
-				<svg class="icon" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+				<svg class="current-color icon" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#apps"></use>
 				</svg>
 			</button>
 			<span class="grow-4"></span>
+			<button type="button" class="btn nav-btn" title="Open FAQ" data-show-modal="#faq-dialog">
+				<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
+					<use xlink:href="/img/icons.svg#question"></use>
+				</svg>
+			</button>
 			<button type="button" is="pwa-install" id="install-btn" class="btn nav-btn" src="/service-worker.js" scope="/" title="Install Web App" reloadonupdate="" hidden="">
-				<svg class="icon current-color" width="22" height="22" fill="currentColor" role="img" aria-hidden="true">
+				<svg class="current-color icon" width="22" height="22" fill="currentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#system-software-install"></use>
 				</svg>
-			<span class="mobile-hidden">Install</span>
+				<span class="mobile-hidden">Install</span>
 			</button>
 		</nav>
-		<main class="card shadow">
+		<main class="card shadow overflow-auto">
 			<p class="status-box info">This app is for submitting data for the <a href="https://maps.kernvalley.us" rel="noopener noreferrer external">Kern Valley Maps App</a> and <a href="https://guide.kernvalley.us" rel="noopener noreferrer external">Kern Valley Guide App</a>. Please fill out the form with the name, address, GPS coodinates, and other information.</p>
 			<br />
-			<div class="center">
-				<button type="button" class="btn btn-primary" data-show-modal="#add-place-dialog">Click here to get started</button>
-			</div>
+			<section id="about">
+				<h2>What exactly is this?</h2>
+				<p>
+					<a href="https://github.com/kernvalley/places" rel="noopener noreferrer external" class="underline">
+						<span>KRV Places data</span>
+						<svg class="current-color icon" width="18" height="18" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#link-external"></use>
+						</svg>
+					</a>
+					is an open data source containing extensive information on places (businesses,
+					landmarks, mountains, towns, etc.) in and around the Kern River Valley.This data is
+					used in serveral
+					<a href="https://kernvalley.us" rel="noopener noreferrer external" class="underline">
+						<span>KernValley.US</span>
+						<svg class="current-color icon" width="18" height="18" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#link-external"></use>
+						</svg>
+					</a>
+					Projects, and is open source and freely available for public use.
+				</p>
+				<div class="center">
+					<button type="button" class="btn btn-primary" data-show-modal="#add-place-dialog">Click here to get started</button>
+				</div>
+				<p>
+					<span>For detailed documentation on each type, please see the official documentation for each type:</span>
+					<ul class="documentation-links">
+						<li><a href="https://schema.org/Place" rel="noopener noreferrer external">Place</a></li>
+						<li><a href="https://schema.org/LocalBusiness" rel="noopener noreferrer external">LocalBusiness</a></li>
+						<li><a href="https://schema.org/Restaurant" rel="noopener noreferrer external">Restaurant</a></li>
+						<li><a href="https://schema.org/Motel" rel="noopener noreferrer external">Motel</a></li>
+						<li><a href="https://schema.org/Campground" rel="noopener noreferrer external">Campground</a></li>
+						<li><a href="https://schema.org/Store" rel="noopener noreferrer external">Store</a></li>
+						<li><a href="https://schema.org/CivicStructure" rel="noopener noreferrer external">CivicStructure</a></li>
+						<li><a href="https://schema.org/City" rel="noopener noreferrer external">City</a></li>
+					</ul>
+				</p>
+			</section>
 		</main>
 		<aside id="sidebar"></aside>
 		<footer id="footer">
 			<div class="flex row wrap space-around footer-links">
 				<div class="inline-block footer-links">
 					<a href="https://kernvalley.us" class="block" rel="noopener external noreferrer">
-						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+						<svg class="current-color icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#web-browser"></use>
 						</svg>
 						<span>KernValley.US</span>
 					</a>
 					<a href="https://kernvalley.us/privacy/" class="block" rel="noopener external noreferrer">
-						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+						<svg class="current-color icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#eye"></use>
 						</svg>
 						<span>Privacy</span>
 					</a>
 					<a href="/contact" class="block">
-						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+						<svg class="current-color icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#address-book"></use>
 						</svg>
 						<span>Contact</span>
 					</a>
 					<a href="https://apps.kernvalley.us" class="block" rel="noreferrer noopener external">
-						<svg class="icon current-color" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
+						<svg class="current-color icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#apps"></use>
 						</svg>
 						<span>All Apps</span>
 					</a>
 				</div>
 				<div class="inline-block footer-links">
-						<a class="block" href="https://www.facebook.com/KernValley.us/" target="_blank" rel="external noopener" itemprop="sameAs">
+						<a class="block" href="https://www.facebook.com/KernValley.us/" target="_blank" rel="external noopener noreferrer" itemprop="sameAs">
 							<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
 								<use xlink:href="/img/icons.svg#facebook"></use>
 							</svg>
 							<span>Facebook</span>
 						</a>
-						<a class="block" href="https://twitter.com/kern_valley" target="_blank" rel="external noopener" itemprop="sameAs">
+						<a class="block" href="https://twitter.com/kern_valley" target="_blank" rel="external noopener noreferrer" itemprop="sameAs">
 							<svg class="social-icon" width="24" height="24" fill="currentColor" role="img" aria-hidden="true">
 								<use xlink:href="/img/icons.svg#twitter"></use>
 							</svg>
@@ -127,37 +166,33 @@
 							<span>Instagram</span>
 						</a>
 						<a class="block" href="https://www.linkedin.com/company/18644791/" target="_blank" rel="external noopener" itemprop="sameAs">
-							<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+							<svg class="current-color icon social-icon" width="24" height="24" fill="curentColor" role="img" aria-hidden="true">
 								<use xlink:href="/img/icons.svg#linkedin"></use>
 							</svg>
 							<span>LinkedIn</span>
 						</a>
 				</div>
 				<div class="inline-block">
-					<a class="block" href="https://github.com/kernvalley/" target="_blank" rel="external noopener">
-						<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+					<a class="block" href="https://github.com/kernvalley/" target="_blank" rel="external noopener noreferrer">
+						<svg class="current-color icon social-icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#mark-github"></use>
 						</svg>
 						<span>GitHub Profile</span>
 					</a>
 					<a class="block" href="https://github.com/shgysk8zer0/places-app" target="_blank" rel="external noopener noreferrer">
-						<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+						<svg class="current-color icon social-icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#repo"></use>
 						</svg>
 
 						<span>GitHub Repo</span>
 					</a>
 					<a class="block" href="https://github.com/shgysk8zer0/places-app/issues" target="_blank" rel="external noopener noreferrer">
-						<svg class="current-color icon social-icon" role="img" aria-hidden="true">
+						<svg class="current-color icon social-icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#issue-opened"></use>
 						</svg>
 						<span>Report a Problem</span>
 					</a>
 				</div>
-			</div>
-			<div>
-				<hr />
-				<app-stores class="flex row wrap app-stores"></app-stores>
 			</div>
 			<hr />
 			<div class="copyright flex wrap space-evenly">
@@ -366,7 +401,7 @@
 					<br />
 					<div class="flex row space-evenly">
 						<button type="button" class="btn btn-primary" id="get-geo">
-							<svg class="current-color icon">
+							<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 								<use xlink:href="/img/icons.svg#find-location" />
 							</svg>
 						</button>
@@ -385,7 +420,7 @@
 								<span>Sun<span class="mobile-hidden">day</span></span>
 								<input type="time" name="openingHoursSpecification[Sunday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Sunday][closes]" placeholder="##:##" />
 						</div>
 						<div class="form-group">
@@ -393,7 +428,7 @@
 								<span>Mon<span class="mobile-hidden">day</span></span>
 								<input type="time" name="openingHoursSpecification[Monday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Monday][closes]" placeholder="##:##" />
 						</div>
 						<div class="form-group">
@@ -401,7 +436,7 @@
 								<span>Tue<span class="mobile-hidden">sday</span></span>
 								<input type="time" name="openingHoursSpecification[Tuesday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Tuesday][closes]" placeholder="##:##" />
 						</div>
 						<div class="form-group">
@@ -409,7 +444,7 @@
 								<span>Wed<span class="mobile-hidden">nesday</span></span>
 								<input type="time" name="openingHoursSpecification[Wednesday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Wednesday][closes]" placeholder="##:##" />
 						</div>
 						<div class="form-group">
@@ -417,7 +452,7 @@
 								<span>Thu<span class="mobile-hidden">rsday</span></span>
 								<input type="time" name="openingHoursSpecification[Thursday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Thursday][closes]" placeholder="##:##" />
 						</div>
 						<div class="form-group">
@@ -425,7 +460,7 @@
 								<span>Fri<span class="mobile-hidden">day</span></span>
 								<input type="time" name="openingHoursSpecification[Friday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Friday][closes]" placeholder="##:##" />
 						</div>
 						<div class="form-group">
@@ -433,7 +468,7 @@
 								<span>Sat<span class="mobile-hidden">urday</span></span>
 								<input type="time" name="openingHoursSpecification[Saturday][opens]" placeholder="##:##" />
 							</label>
-							<span>&mdash;</span>
+							<span>—</span>
 							<input type="time" name="openingHoursSpecification[Saturday][closes]" placeholder="##:##" />
 						</div>
 					</details>
@@ -445,26 +480,111 @@
 				<div id="btn-container" class="btns flex row no-wrap">
 					<button type="submit" class="btn btn-accept grow-1">
 						<span class="mobile-hidden">Submit</span>
-						<svg class="current-color icon">
+						<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#check" />
 						</svg>
 					</button>
 					<button type="reset" class="btn btn-reject grow-1">
 						<span class="mobile-hidden">Cancel</span>
-						<svg class="current-color icon">
+						<svg class="current-color icon"  width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#x" />
 						</svg>
 					</button>
 				</div>
 			</form>
 		</dialog>
+		<dialog id="faq-dialog">
+			<details class="accordion" open="">
+				<summary class="clearfix">
+					<abbr title="Frequently Asked Questions">FAQ</abbr>
+					<button type="button" class="btn background-none no-border color-inherit float-right" title="Close" data-close="#faq-dialog">
+						<svg class="icon" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#x"></use>
+						</svg>
+					</button>
+				</summary>
+				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
+					<dt class="faq-question">
+						<b title="Question">
+							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#question"></use>
+							</svg>
+						</b>
+						<b><q itemprop="name">Where do I submit data?</q></b>
+					</dt>
+					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
+						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
+						<i itemprop="text" class="block">Upon clicking <q>Submit</q> on the form, a popup will open on GitHub. Choose <q>Submit Place</q> and either drag in the saved file to the bottom of the form to upload or paste the data that was automatically copied.</i>
+					</dd>
+				</dl>
+				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
+					<dt class="faq-question">
+						<b title="Question">
+							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#question"></use>
+							</svg>
+						</b>
+						<b><q itemprop="name">What is this data used for?</q></b>
+					</dt>
+					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
+						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
+						<i itemprop="text" class="block">This data is used for KRV Maps, KRV Guide, serveral other web apps, and is also open source and freely available to the public.</i>
+					</dd>
+				</dl>
+				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
+					<dt class="faq-question">
+						<b title="Question">
+							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#question"></use>
+							</svg>
+						</b>
+						<b><q itemprop="name">Is there any other way to submit data?</q></b>
+					</dt>
+					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
+						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
+						<i itemprop="text" class="block">If you are familiar with <code>YAML</code> and GitHub, you may fork <code>kernvalley/places</code>, make changes, and submit a Pull Request.<br /><b>Note:</b> all submited place data <strong>MUST</strong> be valid <code>YAML</code>, <strong>MUST</strong> match the <a href="https://schema.org/Place" rel="noopener noreferrer external" class="underline">spec</a>, and <strong>MUST</strong> pass the test on <a href="https://search.google.com/test/rich-results" rel="noopener noreferrer external" class="underline"> Google's Rich Results Test</a>.</i>
+					</dd>
+				</dl>
+				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
+					<dt class="faq-question">
+						<b title="Question">
+							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#question"></use>
+							</svg>
+						</b>
+						<b><q itemprop="name">I am a developer and want to use this data. Where do I start?</q></b>
+					</dt>
+					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
+						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
+						<i itemprop="text" class="block">The best way to start using the KernValley Places data in your project is by copying the data locally via:
+							<pre><code>git submodule add https://github.com/kernvalley/places.git</code></pre>
+							<p>See <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules" rel="noopener noreferrer external" class="underline">
+								<span>Git - Submodules</span>
+								<svg class="icon" height="18" width="18" fill="currentColor" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#link-external"></use>
+								</svg>
+							</a> to learn more.
+							</p>
+						</i>
+					</dd>
+				</dl>
+			</details>
+			<div class="center">
+				<button type="button" class="btn btn-reject btn-wide" title="Close" data-close="#faq-dialog">
+					<span>Close</span>
+					<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
+						<use xlink:href="/img/icons.svg#x" />
+					</svg>
+				</button>
+			</div>
+		</dialog>
 		<button type="button" class="btn btn-primary fixed z-4 bottom left round shadow" id="create-btn" data-show-modal="#add-place-dialog" accesskey="+" title="Add New Place">
-				<svg class="current-color icon" fill="currentColor" height="20" width="20">
-					<use xlink:href="/img/icons.svg#plus"></use>
-				</svg>
-			</button>
-		<button type="button" is="share-button" class="btn btn-primary round shadow fixed z-4" aria-label="Share" hidden="">
-			<svg class="current-color icon">
+			<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
+				<use xlink:href="/img/icons.svg#plus"></use>
+			</svg>
+		</button>
+		<button type="button" is="share-button" class="btn btn-primary round shadow fixed z-4" aria-label="Share" text="An app for submitting place data to the open KRV places data collection" url="/" sharetitle="KRV Places" hidden="">
+			<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 				<use xlink:href="/img/icons.svg#public-share"></use>
 			</svg>
 		</button>
