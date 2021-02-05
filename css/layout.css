@@ -9,7 +9,7 @@
 body {
 	display: grid;
 	grid-template-areas: "nav nav nav" ". main ." "footer footer footer";
-	grid-template-rows: var(--nav-height, 4rem) calc(100vh - var(--nav-height, 4rem)) auto;
+	grid-template-rows: var(--nav-height, 4rem) minmax(calc(100vh - var(--nav-height, 4rem)), 1fr) auto;
 	grid-template-columns: 12px 1fr 12px;
 	gap: 8px;
 }
