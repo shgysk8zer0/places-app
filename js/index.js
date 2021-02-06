@@ -6,12 +6,13 @@ import 'https://cdn.kernvalley.us/components/github/user.js';
 import 'https://cdn.kernvalley.us/components/pwa/install.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
 import { $, getCustomElement, openWindow } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
-import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
 import { alert, confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
 import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
-import { fileToImageObject, selectText } from './functions.js';
+import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
+import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
+import { selectText, formToPlace } from './functions.js';
 import { GA } from './consts.js';
 
 $(document.documentElement).toggleClass({
@@ -56,73 +57,44 @@ $.ready.then(async () => {
 		}
 	});
 
+	$('#place-img-url').change(async ({ target }) => {
+		if (target.validity.valid && target.value !== '') {
+			try {
+				const img = await loadImage(target.value);
+				await img.decode();
+				const { naturalHeight, naturalWidth } = img;
+
+				if (Number.isNaN(naturalHeight) || naturalHeight === 0) {
+					$('#place-img-height').value(0);
+					$('#place-img-width').value(0);
+					document.getElementById('img-preview').replaceChildren();
+				} else {
+					$('#place-img-height').value(naturalHeight);
+					$('#place-img-width').value(naturalWidth);
+					document.getElementById('img-preview').replaceChildren(img);
+				}
+			} catch(err) {
+				console.error(err);
+				$('#place-img-height').value('');
+				$('#place-img-width').value('');
+				const msg = document.createElement('code');
+				msg.classList.add('block', 'status-box', 'alert');
+				msg.textContent = err.message;
+				document.getElementById('img-preview').replaceChildren(msg);
+			}
+		} else {
+			$('#place-img-height').value('');
+			$('#place-img-width').value('');
+			document.getElementById('img-preview').replaceChildren();
+		}
+	});
+
 	$('form[name="addPlace"]').submit(async event => {
 		event.preventDefault();
 		const body = new FormData(event.target);
-		let data = {
-			'@type': body.get('@type') || 'LocalBusiness',
-			'@context': 'https://schema.org',
-			'identifier': body.get('identifier'),
-			'name': body.get('name'),
-			'telephone': body.get('telephone') || null,
-			'email': body.get('email') || null,
-			'description': body.get('description') || null,
-			'sameAs': body.getAll('sameAs[]').filter(url => typeof url === 'string' && url.length !== 0),
-			'address': {
-				'@type': 'PostalAddress',
-				'streetAddress': body.get('address[streetAddress]') || null,
-				'postOfficeBoxNumber': body.get('address[postOfficeBoxNumber]') || null,
-				'addressLocality': body.get('address[addressLocality]'),
-				'addressRegion': body.get('address[addressRegion]'),
-				'postalCode': body.get('address[postalCode]'),
-			},
-			'geo': {
-				'@type': 'GeoCoordinates',
-				'latitude': body.get('geo[latitude]'),
-				'longitude': body.get('geo[longitude]'),
-				'url': `geo${body.get('latitude')},${body.get('longitude')}`,
-			},
-			'openingHoursSpecification': [{
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Sunday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Sunday][closes]') || null,
-				'dayOfWeek': 'Sunday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Monday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Monday][closes]') || null,
-				'dayOfWeek': 'Monday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Tuesday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Tuesday][closes]') || null,
-				'dayOfWeek': 'Tuesday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Wednesday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Wednesday][closes]') || null,
-				'dayOfWeek': 'Wednesday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Thursday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Thursday][closes]') || null,
-				'dayOfWeek': 'Thursday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Friday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Friday][closes]') || null,
-				'dayOfWeek': 'Friday',
-			}, {
-				'@type': 'OpeningHoursSpecification',
-				'opens': body.get('openingHoursSpecification[Saturday][opens]') || null,
-				'closes': body.get('openingHoursSpecification[Saturday][closes]') || null,
-				'dayOfWeek': 'Saturday',
-			}].filter(({ opens, closes }) => typeof opens === 'string' && typeof closes === 'string')
-		};
+		let data = formToPlace(body);
 
-		if (body.has('image')) {
-			data.image = await fileToImageObject(body.get('image'));
-		} else {
+		if (! Array.isArray(data.image) || data.image.length === 0) {
 			data.image = [{
 				'@type': 'ImageObject',
 				url: 'https://cdn.kernvalley.us/img/raster/missing-image.png',
