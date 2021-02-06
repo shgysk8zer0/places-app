@@ -76,3 +76,24 @@ export function formToPlace(form) {
 		throw new TypeError('Form must be a <form> or `FormData`');
 	}
 }
+
+export function selectText(node) {
+	if (typeof node === 'string') {
+		return selectText(document.querySelector(node));
+	} else if (! (node instanceof Element)) {
+		throw new TypeError('Node must be an element or selector');
+	} else if (document.body.createTextRange instanceof Function) {
+		const range = document.body.createTextRange();
+		range.moveToElementText(node);
+		range.select();
+	} else if (window.getSelection instanceof Function) {
+		const selection = window.getSelection();
+		const range = document.createRange();
+		range.selectNodeContents(node);
+		selection.removeAllRanges();
+		selection.addRange(range);
+	} else {
+		console.warn('Could not select text in node: Unsupported browser.');
+		throw new TypeError('Form must be a <form> or `FormData`');
+	}
+}
