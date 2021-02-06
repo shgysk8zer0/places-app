@@ -10,9 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add limited support for select `"Organization"` types
 - Add fields for select social networks
+- Support images via URL
 
 ### Changed
 - Update page with more content and FAQ
+
+### Removed
+- Do not allow uploading/bas64 encoding images
 
 ## [v2.0.0] - 2021-02-14
 

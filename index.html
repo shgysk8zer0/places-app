@@ -445,6 +445,25 @@
 						<br />
 					</details>
 				</fieldset>
+				<fieldset id="image-section" class="no-border">
+					<legend hidden="">Image</legend>
+					<details class="accordion">
+						<summary>Image</summary>
+						<div class="form-group">
+							<label for="place-img-url">URL</label>
+							<input type="url" name="image[url]" id="place-img-url" class="input" placeholder="https://example.com/img.jpg" />
+						</div>
+						<div class="form-group">
+							<label for="place-img-width">Width</label>
+							<input type="number" name="image[width]" id="place-img-width" class="input" min="120" step="1" readonly="" />
+						</div>
+						<div class="form-group">
+							<label for="place-img-height">Height</label>
+							<input type="number" name="image[height]" id="place-img-height" class="input" min="120" step="1" readonly="" />
+						</div>
+						<div id="img-preview" class="card center"></div>
+					</details>
+				</fieldset>
 				<fieldset id="hours-section" class="no-border">
 					<legend hidden="">Business Hours</legend>
 					<!-- https://schema.org/OpeningHoursSpecification -->
@@ -565,13 +584,6 @@
 							<input type="url" name="sameAs[]" id="yelp-link" class="input" placeholder="https://www.yelp.com/..." />
 						</div>
 					</details>
-				</fieldset>
-				<fieldset id="img-section" class="no-border">
-					<legend hidden="">Place Image</legend>
-					<div class="form-group">
-						<label for="place-img" class="input-label">Image</label>
-						<input type="file" name="image" accept="image/*" class="input" />
-					</div>
 				</fieldset>
 				<hr />
 				<div id="btn-container" class="btns flex row no-wrap">
