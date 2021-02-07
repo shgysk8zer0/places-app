@@ -4,4 +4,5 @@ export const ORG_TYPES = [
 	'NewsMediaOrganization',
 	'GovernmentOrganization',
 	'NGO',
+	'VeterinaryCare',
 ];

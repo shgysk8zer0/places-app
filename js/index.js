@@ -6,14 +6,14 @@ import 'https://cdn.kernvalley.us/components/github/user.js';
 import 'https://cdn.kernvalley.us/components/pwa/install.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
 import 'https://cdn.kernvalley.us/components/share-target.js';
-import { $, getCustomElement, openWindow } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
-import { alert, confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
+import { $, getCustomElement, openWindow, sleep } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
+import {  confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
 import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
 import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
-import { selectText, formToPlace,uploadToImgur } from './functions.js';
+import { selectText, formToPlace, uploadToImgur, clipboardCopy } from './functions.js';
 import { GA, ORG_TYPES } from './consts.js';
 
 $(document.documentElement).toggleClass({
@@ -131,7 +131,8 @@ $.ready.then(async () => {
 
 	$('form[name="addPlace"]').submit(async event => {
 		event.preventDefault();
-		const body = new FormData(event.target);
+		const form = event.target;
+		const body = new FormData(form);
 		let data = formToPlace(body);
 
 		if (! Array.isArray(data.image) || data.image.length === 0) {
@@ -145,10 +146,11 @@ $.ready.then(async () => {
 		}
 
 		const json = JSON.stringify([data], null, 4);
-		const file = new File([json], `${body.get('name')}.text`, { type: 'text/plain' });
+		const file = new File([json], `${body.get('name')}.json.txt`, { type: 'text/plain' });
 
-		if (await confirm('Save file?')) {
-			await save(file).catch(async err => {
+		await Promise.allSettled([
+			save(file),
+			clipboardCopy(json).catch(async err => {
 				console.error(err);
 				$('dialog').close();
 				$('#content-fallback').text(json);
@@ -157,29 +159,8 @@ $.ready.then(async () => {
 					selectText('#content-fallback');
 					$('#content-fallback-dialog').on('close', resolve, { once: true });
 				});
-			});
-		} else if (navigator.clipboard && navigator.clipboard.writeText instanceof Function) {
-			await navigator.clipboard.writeText(json)
-				.then(() => alert('Copied to clipboard')).catch(async err => {
-					console.error(err);
-					$('dialog').close();
-					$('#content-fallback').text(json);
-					await $('#content-fallback-dialog').showModal();
-					await new Promise(resolve => {
-						selectText('#content-fallback');
-						document.getElementById('content-fallback').parentElement.select();
-						$('#content-fallback-dialog').on('close', resolve, { once: true });
-					});
-				});
-		} else {
-			$('dialog').close();
-			$('#content-fallback').text(json);
-			await $('#content-fallback-dialog').showModal();
-			await new Promise(resolve => {
-				selectText('#content-fallback');
-				$('#content-fallback-dialog').on('close', resolve, { once: true });
-			});
-		}
+			}),
+		]);
 
 		if (await confirm('Submit data on GitHub (requires GitHub account)?')) {
 			openWindow('https://github.com/kernvalley/places/issues/new/choose', {
@@ -201,16 +182,40 @@ $.ready.then(async () => {
 				body: json,
 			}).catch(console.error);
 		}
+
+		if (await confirm('Clear form data?')) {
+			form.reset();
+		}
 	});
 
-	$('form[name="addPlace"]').reset(({ target }) => {
-		target.closest('dialog').close();
-		$('#identifier').value(uuidv6());
+	$('#latitude, #longitude').on('paste', async ({ clipboardData }) => {
+		const data = clipboardData.getData('text/plain');
+		if (data.includes(',')) {
+			const [latitude, longitude] = data.split(',').map(v => parseFloat(v.trim()));
+
+			if (! (Number.isNaN(latitude) || Number.isNaN(longitude))) {
+				await sleep(100);
+				document.getElementById('latitude').value = latitude.toFixed(6);
+				document.getElementById('longitude').value = longitude.toFixed(6);
+				$('leaflet-map').attr({ center: `${latitude},${longitude}` });
+			}
+		}
 	}, { passive: true });
+
+	$('form[name="addPlace"]').reset(() =>$('#identifier').value(uuidv6()));
 
 	$('#get-geo').click(async () => {
 		await customElements.whenDefined('leaflet-map');
 		document.querySelector('leaflet-map').locate({ setView: true, maxZoom: 17 });
+	});
+
+	$('#weekday-hr-copy').click(() => {
+		const opens = document.getElementById('mon-opens').value;
+		const closes = document.getElementById('mon-closes').value;
+		if (opens.length !== 0 && closes.length !== 0) {
+			$('[type="time"].weekday-opens:not(#mon-opens)').value(opens);
+			$('[type="time"].weekday-closes:not(#mon-closes)').value(closes);
+		}
 	});
 
 	Promise.all([

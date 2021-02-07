@@ -102,7 +102,12 @@
 					Projects, and is open source and freely available for public use.
 				</p>
 				<div class="center">
-					<button type="button" class="btn btn-primary" data-show-modal="#add-place-dialog">Click here to get started</button>
+					<button type="button" class="btn btn-primary" data-show-modal="#add-place-dialog">
+						<svg class="icon" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+							<use xlink:href="/img/icons.svg#plus"></use>
+						</svg>
+						<span>Click here to get started</span>
+					</button>
 				</div>
 				<p>
 					<span>For detailed documentation on each type, please see the official documentation for each type:</span>
@@ -423,7 +428,7 @@
 				</fieldset>
 				<fieldset id="geo-section" class="no-border">
 					<legend hidden="">Coordinates</legend>
-					<details class="accordion" open="">
+					<details class="accordion">
 						<summary>GPS Coordinates</summary>
 						<input type="hidden" name="geo[@type]" value="GeoCoordinates" />
 						<div class="form-group">
@@ -487,61 +492,81 @@
 					<!-- https://schema.org/OpeningHoursSpecification -->
 					<details id="business-hours" class="accordion">
 						<summary>Business Hours</summary>
+						<input type="hidden" name="openingHoursSpecification[Sunday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Sunday][dayofWeek]" value="Sunday" />
 						<div class="form-group">
 							<label>
 								<span>Sun<span class="mobile-hidden">day</span></span>
-								<input type="time" name="openingHoursSpecification[Sunday][opens]" placeholder="##:##" />
+								<input type="time" id="sun-opens" class="weekend-opens" name="openingHoursSpecification[Sunday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Sunday][closes]" placeholder="##:##" />
+							<input type="time" id="sun-closes" class="weekend-closes" name="openingHoursSpecification[Sunday][closes]" placeholder="##:##" />
 						</div>
-						<div class="form-group">
+						<input type="hidden" name="openingHoursSpecification[Monday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Monday][dayofWeek]" value="Monday" />
+						<div class="form-group clearfix">
 							<label>
 								<span>Mon<span class="mobile-hidden">day</span></span>
-								<input type="time" name="openingHoursSpecification[Monday][opens]" placeholder="##:##" />
+								<input type="time" id="mon-opens" class="weekday-opens" name="openingHoursSpecification[Monday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Monday][closes]" placeholder="##:##" />
+							<input type="time" id="mon-closes" class="weekday-closes" name="openingHoursSpecification[Monday][closes]" placeholder="##:##" />
+							<button type="button" id="weekday-hr-copy" class="btn btn-primary float-right">
+								<svg class="icon" height="20" width="20" fill="currentColor" role="img" aria-hidden="true">
+									<use xlink:href="/img/icons.svg#clippy"></use>
+								</svg>
+								<span>Copy to all Weekdays</span>
+							</button>
 						</div>
+						<input type="hidden" name="openingHoursSpecification[Tuesday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Tuesday][dayofWeek]" value="Tuesday" />
 						<div class="form-group">
 							<label>
 								<span>Tue<span class="mobile-hidden">sday</span></span>
-								<input type="time" name="openingHoursSpecification[Tuesday][opens]" placeholder="##:##" />
+								<input type="time" id="tues-opens" class="weekday-opens" name="openingHoursSpecification[Tuesday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Tuesday][closes]" placeholder="##:##" />
+							<input type="time" id="tues-closes" class="weekday-closes" name="openingHoursSpecification[Tuesday][closes]" placeholder="##:##" />
 						</div>
+						<input type="hidden" name="openingHoursSpecification[Wednesday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Wednesday][dayofWeek]" value="Wednesday" />
 						<div class="form-group">
 							<label>
 								<span>Wed<span class="mobile-hidden">nesday</span></span>
-								<input type="time" name="openingHoursSpecification[Wednesday][opens]" placeholder="##:##" />
+								<input type="time" id="wed-opens" class="weekday-opens" name="openingHoursSpecification[Wednesday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Wednesday][closes]" placeholder="##:##" />
+							<input type="time" id="wed-closes" class="weekday-closes" name="openingHoursSpecification[Wednesday][closes]" placeholder="##:##" />
 						</div>
+						<input type="hidden" name="openingHoursSpecification[Thursday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Thursday][dayofWeek]" value="Thursday" />
 						<div class="form-group">
 							<label>
 								<span>Thu<span class="mobile-hidden">rsday</span></span>
-								<input type="time" name="openingHoursSpecification[Thursday][opens]" placeholder="##:##" />
+								<input type="time" id="thur-opens" class="weekday-opens" name="openingHoursSpecification[Thursday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Thursday][closes]" placeholder="##:##" />
+							<input type="time" id="thurs-closes" class="weekday-closes" name="openingHoursSpecification[Thursday][closes]" placeholder="##:##" />
 						</div>
+						<input type="hidden" name="openingHoursSpecification[Friday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Friday][dayofWeek]" value="Friday" />
 						<div class="form-group">
 							<label>
 								<span>Fri<span class="mobile-hidden">day</span></span>
-								<input type="time" name="openingHoursSpecification[Friday][opens]" placeholder="##:##" />
+								<input type="time" id="fri-opens" class="weekday-opens" name="openingHoursSpecification[Friday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Friday][closes]" placeholder="##:##" />
+							<input type="time" id="fri-closes" class="weekday-closes" name="openingHoursSpecification[Friday][closes]" placeholder="##:##" />
 						</div>
+						<input type="hidden" name="openingHoursSpecification[Saturday][@type]" value="OpeningHoursSpecification" />
+						<input type="hidden" name="openingHoursSpecification[Saturday][dayofWeek]" value="Saturday" />
 						<div class="form-group">
 							<label>
 								<span>Sat<span class="mobile-hidden">urday</span></span>
-								<input type="time" name="openingHoursSpecification[Saturday][opens]" placeholder="##:##" />
+								<input type="time" id="sat-opens" class="weekend-opens" name="openingHoursSpecification[Saturday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" name="openingHoursSpecification[Saturday][closes]" placeholder="##:##" />
+							<input type="time" id="sat-closes" class="weekend-closes" name="openingHoursSpecification[Saturday][closes]" placeholder="##:##" />
 						</div>
 					</details>
 				</fieldset>
@@ -611,7 +636,7 @@
 							<use xlink:href="/img/icons.svg#check" />
 						</svg>
 					</button>
-					<button type="reset" class="btn btn-reject grow-1">
+					<button type="reset" class="btn btn-reject grow-1" data-close="#add-place-dialog">
 						<span class="mobile-hidden">Cancel</span>
 						<svg class="current-color icon"  width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 							<use xlink:href="/img/icons.svg#x" />
