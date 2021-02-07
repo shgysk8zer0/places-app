@@ -7,14 +7,15 @@ import 'https://cdn.kernvalley.us/components/pwa/install.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
 import 'https://cdn.kernvalley.us/components/share-target.js';
 import { $, getCustomElement, openWindow, sleep } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
+import { upload } from 'https://cdn.kernvalley.us/js/std-js/imgur.js';
 import {  confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
 import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
 import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
-import { selectText, formToPlace, uploadToImgur, clipboardCopy } from './functions.js';
-import { GA, ORG_TYPES } from './consts.js';
+import { selectText, formToPlace, clipboardCopy } from './functions.js';
+import { GA, ORG_TYPES, imgurClientId as clientId } from './consts.js';
 
 $(document.documentElement).toggleClass({
 	'no-js': false,
@@ -67,7 +68,7 @@ $.ready.then(async () => {
 
 	$('#img-upload').change(async ({ target }) => {
 		if (target.files.length === 1) {
-			const { data: { link }} = await uploadToImgur(target.files[0]).catch(console.error);
+			const { data: { link }} = await upload(target, { clientId }).catch(console.error);
 
 			if (typeof link === 'string') {
 				const imgUrl = document.getElementById('place-img-url');
