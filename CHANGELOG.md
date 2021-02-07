@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implement `share_target` for PWA, prefilling name, url, and description
 - Support alternate formatting (`"location"`) for`"Organization"` types
 - Add support for optional `"alternateType"`
+- Image uploads via Imgur API
 
 ### Changed
 - Update page with more content and FAQ
