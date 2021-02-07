@@ -1,10 +1,12 @@
+import { ORG_TYPES } from './consts.js';
+
 export function formToPlace(form) {
 	if (form instanceof HTMLFormElement) {
 		return formToPlace(new FormData(form));
 	} else if (form instanceof Event) {
 		return formToPlace(form.target);
 	} else if (form instanceof FormData) {
-		return {
+		const data = {
 			'@type': form.get('@type') || 'LocalBusiness',
 			'@context': 'https://schema.org',
 			'identifier': form.get('identifier'),
@@ -12,9 +14,37 @@ export function formToPlace(form) {
 			'telephone': form.get('telephone') || null,
 			'email': form.get('email') || null,
 			'description': form.get('description') || null,
+			'additionalType': form.getAll('additionalType').filter(v => v.length !== 0),
 			'sameAs': form.getAll('sameAs[]')
 				.filter(url => typeof url === 'string' && url.length !== 0),
-			'address': {
+			'image': [{
+				'@type': 'ImageObject',
+				'url': form.get('image[url]') || null,
+				'width': parseInt(form.get('image[width]')),
+				'height': parseInt(form.get('image[height]')),
+			}].filter(({ url, width }) => typeof url === 'string' && ! Number.isNaN(width)),
+		};
+
+		if (ORG_TYPES.includes(data['@type'])) {
+			data.location = {
+				'address': {
+					'@type': 'PostalAddress',
+					'streetAddress': form.get('address[streetAddress]') || null,
+					'postOfficeBoxNumber': form.get('address[postOfficeBoxNumber]') || null,
+					'addressLocality': form.get('address[addressLocality]'),
+					'addressRegion': form.get('address[addressRegion]') || 'CA',
+					'addressCountry': form.get('address[addressCountry]') || 'US',
+					'postalCode': form.get('address[postalCode]'),
+				},
+				'geo': {
+					'@type': 'GeoCoordinates',
+					'latitude': parseFloat(form.get('geo[latitude]')),
+					'longitude': parseFloat(form.get('geo[longitude]')),
+					'url': `geo:${form.get('geo[latitude]')},${form.get('geo[longitude]')}`,
+				},
+			};
+		} else {
+			data.address = {
 				'@type': 'PostalAddress',
 				'streetAddress': form.get('address[streetAddress]') || null,
 				'postOfficeBoxNumber': form.get('address[postOfficeBoxNumber]') || null,
@@ -22,20 +52,15 @@ export function formToPlace(form) {
 				'addressRegion': form.get('address[addressRegion]') || 'CA',
 				'addressCountry': form.get('address[addressCountry]') || 'US',
 				'postalCode': form.get('address[postalCode]'),
-			},
-			'geo': {
+			};
+			data.geo = {
 				'@type': 'GeoCoordinates',
 				'latitude': parseFloat(form.get('geo[latitude]')),
 				'longitude': parseFloat(form.get('geo[longitude]')),
 				'url': `geo:${form.get('geo[latitude]')},${form.get('geo[longitude]')}`,
-			},
-			'image': [{
-				'@type': 'ImageObject',
-				'url': form.get('image[url]') || null,
-				'width': parseInt(form.get('image[width]')),
-				'height': parseInt(form.get('image[height]')),
-			}].filter(({ url, width }) => typeof url === 'string' && ! Number.isNaN(width)),
-			'openingHoursSpecification': [{
+			};
+
+			data.openingHoursSpecification = [{
 				'@type': 'OpeningHoursSpecification',
 				'opens': form.get('openingHoursSpecification[Sunday][opens]') || null,
 				'closes': form.get('openingHoursSpecification[Sunday][closes]') || null,
@@ -70,8 +95,10 @@ export function formToPlace(form) {
 				'opens': form.get('openingHoursSpecification[Saturday][opens]') || null,
 				'closes': form.get('openingHoursSpecification[Saturday][closes]') || null,
 				'dayOfWeek': 'Saturday',
-			}].filter(({ opens, closes }) => typeof opens === 'string' && typeof closes === 'string')
-		};
+			}].filter(({ opens, closes }) => typeof opens === 'string' && typeof closes === 'string');
+		}
+
+		return data;
 	} else {
 		throw new TypeError('Form must be a <form> or `FormData`');
 	}

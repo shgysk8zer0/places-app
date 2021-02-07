@@ -1,6 +1,6 @@
 /* eslint-env serviceworker */
 /* eslint no-unused-vars: 0 */
-/* 2021-02-06T14:55*/
+/* 2021-02-07T8:28 */
 
 const config = {
 	version: '2.0.0',
@@ -41,7 +41,6 @@ const config = {
 		'https://www.google-analytics.com/analytics.js',
 		'https://www.googletagmanager.com/gtag/js',
 		'https://maps.wikimedia.org/osm-intl/',
-		'https://i.imgur.com/',
 		/https:\/\/\w+\.githubusercontent\.com\/u\/*/,
 	],
 	allowedFresh: [
