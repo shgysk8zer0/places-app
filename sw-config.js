@@ -6,9 +6,6 @@ const config = {
 	version: '2.0.0',
 	fresh: [
 		'/',
-		'/reset',
-		'/js/reset.js',
-		'https://cdn.kernvalley.us/js/pwa-reset.js',
 		'/manifest.json',
 		'https://apps.kernvalley.us/apps.json',
 	].map(path => new URL(path, location.origin)),
