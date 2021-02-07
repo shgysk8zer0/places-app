@@ -13,7 +13,7 @@ import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
 import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
 import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
-import { selectText, formToPlace } from './functions.js';
+import { selectText, formToPlace,uploadToImgur } from './functions.js';
 import { GA, ORG_TYPES } from './consts.js';
 
 $(document.documentElement).toggleClass({
@@ -64,6 +64,21 @@ $.ready.then(async () => {
 	if (location.search.includes('name=') || location.search.includes('description=')) {
 		$('#add-place-dialog').showModal();
 	}
+
+	$('#img-upload').change(async ({ target }) => {
+		if (target.files.length === 1) {
+			const { data: { link }} = await uploadToImgur(target.files[0]).catch(console.error);
+
+			if (typeof link === 'string') {
+				const imgUrl = document.getElementById('place-img-url');
+				imgUrl.value = link;
+				imgUrl.dispatchEvent(new Event('change'));
+				target.value = '';
+			} else {
+				throw new Error('Failed uploading image');
+			}
+		}
+	});
 
 	$('#place-type').change(({ target: { value }}) => {
 		if (ORG_TYPES.includes(value)) {

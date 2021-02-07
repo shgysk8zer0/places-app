@@ -1,4 +1,4 @@
-import { ORG_TYPES } from './consts.js';
+import { ORG_TYPES, imgurAppId } from './consts.js';
 
 export function formToPlace(form) {
 	if (form instanceof HTMLFormElement) {
@@ -122,5 +122,22 @@ export function selectText(node) {
 	} else {
 		console.warn('Could not select text in node: Unsupported browser.');
 		throw new TypeError('Form must be a <form> or `FormData`');
+	}
+}
+
+export async function uploadToImgur(body) {
+	const resp = await fetch('https://api.imgur.com/3/image', {
+		method: 'POST',
+		body,
+		headers: new Headers({
+			Authorization: `Client-ID ${imgurAppId}`,
+			Accept: 'application/json',
+		})
+	});
+
+	if (resp.ok) {
+		return await resp.json();
+	} else {
+		throw new Error(`${resp.ul} [${resp.status} ${resp.statusText}]`);
 	}
 }
