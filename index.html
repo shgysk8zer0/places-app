@@ -214,7 +214,8 @@
 			</div>
 		</footer>
 		<dialog id="add-place-dialog">
-			<form name="addPlace" id="add-place" autocomplete="off">
+			<form name="addPlace" id="add-place" is="share-target" autocomplete="off">
+				<input type="hidden" name="@context" value="https://schema.org" />
 				<input type="hidden" name="identifier" id="identifier" />
 				<fieldset id="basic-section" class="no-border">
 					<legend hidden="">Basic Info</legend>
@@ -399,6 +400,7 @@
 					</datalist>
 					<details class="accordion overflow-hidden" open="">
 						<summary><span class="mobile-hidden">Physical and Postal </span>Address</summary>
+						<input type="hidden" name="address[@type]" value="PostalAddress" />
 						<div class="form-group overflow-auto">
 							<input name="address[streetAddress]" id="place-street-address" class="input" placeholder="123 Some St" autocomplete="off" />
 							<input type="number" min="1" max="99999" name="address[postOfficeBoxNumber]" id="place-po-box" class="input" placeholder="PO Box ####" autocomplete="off" />
@@ -413,6 +415,7 @@
 					<legend hidden="">Coordinates</legend>
 					<details class="accordion" open="">
 						<summary>GPS Coordinates</summary>
+						<input type="hidden" name="geo[@type]" value="GeoCoordinates" />
 						<div class="form-group">
 							<label for="latitude" class="input-label">Latitude</label>
 							<input type="number" id="latitude" class="input" name="geo[latitude]" step="0.00000001" placeholder="Latitude"/>
@@ -449,6 +452,7 @@
 					<legend hidden="">Image</legend>
 					<details class="accordion">
 						<summary>Image</summary>
+						<input type="hidden" name="image[@type]" value="ImageObject" />
 						<div class="form-group">
 							<label for="place-img-url">URL</label>
 							<input type="url" name="image[url]" id="place-img-url" class="input" placeholder="https://example.com/img.jpg" />

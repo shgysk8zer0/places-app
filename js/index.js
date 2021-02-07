@@ -5,6 +5,7 @@ import 'https://cdn.kernvalley.us/components/current-year.js';
 import 'https://cdn.kernvalley.us/components/github/user.js';
 import 'https://cdn.kernvalley.us/components/pwa/install.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
+import 'https://cdn.kernvalley.us/components/share-target.js';
 import { $, getCustomElement, openWindow } from 'https://cdn.kernvalley.us/js/std-js/functions.js';
 import { alert, confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
@@ -47,6 +48,10 @@ if (typeof GA === 'string' && GA.length !== 0) {
 $.ready.then(async () => {
 	init().catch(console.error);
 	$('#identifier').value(uuidv6());
+
+	if (location.search.includes('name=') || location.search.includes('description=')) {
+		$('#add-place-dialog').showModal();
+	}
 
 	$('#place-address-locality').change(({ target: { value }}) => {
 		if (value.length !== 0) {
