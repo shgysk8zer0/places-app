@@ -1,5 +1,13 @@
 import { ORG_TYPES, imgurAppId } from './consts.js';
 
+export async function clipboardCopy(data) {
+	if ('clipboard' in navigator && navigator.clipboard.writeText instanceof Function) {
+		return await navigator.clipboard.writeText(data);
+	} else {
+		throw new Error('navigator.clipboard not supported');
+	}
+}
+
 export function formToPlace(form) {
 	if (form instanceof HTMLFormElement) {
 		return formToPlace(new FormData(form));
@@ -10,10 +18,10 @@ export function formToPlace(form) {
 			'@type': form.get('@type') || 'LocalBusiness',
 			'@context': 'https://schema.org',
 			'identifier': form.get('identifier'),
-			'name': form.get('name'),
+			'name': form.get('name').trim(),
 			'telephone': form.get('telephone') || null,
 			'email': form.get('email') || null,
-			'description': form.get('description') || null,
+			'description': form.get('description').trim() || null,
 			'additionalType': form.getAll('additionalType').filter(v => v.length !== 0),
 			'sameAs': form.getAll('sameAs[]')
 				.filter(url => typeof url === 'string' && url.length !== 0),
@@ -29,7 +37,7 @@ export function formToPlace(form) {
 			data.location = {
 				'address': {
 					'@type': 'PostalAddress',
-					'streetAddress': form.get('address[streetAddress]') || null,
+					'streetAddress': form.get('address[streetAddress]').trim() || null,
 					'postOfficeBoxNumber': form.get('address[postOfficeBoxNumber]') || null,
 					'addressLocality': form.get('address[addressLocality]'),
 					'addressRegion': form.get('address[addressRegion]') || 'CA',
