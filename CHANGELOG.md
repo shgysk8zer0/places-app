@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add fields for select social networks
 - Support images via URL
 - Implement `share_target` for PWA, prefilling name, url, and description
+- Support alternate formatting (`"location"`) for`"Organization"` types
+- Add support for optional `"alternateType"`
 
 ### Changed
 - Update page with more content and FAQ

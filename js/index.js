@@ -14,7 +14,7 @@ import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
 import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
 import { selectText, formToPlace } from './functions.js';
-import { GA } from './consts.js';
+import { GA, ORG_TYPES } from './consts.js';
 
 $(document.documentElement).toggleClass({
 	'no-js': false,
@@ -49,9 +49,29 @@ $.ready.then(async () => {
 	init().catch(console.error);
 	$('#identifier').value(uuidv6());
 
+	try {
+		const additionalTypes = document.getElementById('place-type').cloneNode(true);
+		additionalTypes.multiple = true;
+		additionalTypes.required = false;
+		additionalTypes.name = 'additionalType';
+		additionalTypes.id = 'place-additional-type';
+		additionalTypes.firstElementChild.textContent = 'No Additional Type';
+		document.getElementById('additional-types-placeholder').replaceWith(additionalTypes);
+	} catch(err) {
+		console.error(err);
+	}
+
 	if (location.search.includes('name=') || location.search.includes('description=')) {
 		$('#add-place-dialog').showModal();
 	}
+
+	$('#place-type').change(({ target: { value }}) => {
+		if (ORG_TYPES.includes(value)) {
+			$('#hours-section').attr({ disabled: true, hidden: true });
+		} else {
+			$('#hours-section').attr({ disabled: false, hidden: false });
+		}
+	});
 
 	$('#place-address-locality').change(({ target: { value }}) => {
 		if (value.length !== 0) {
