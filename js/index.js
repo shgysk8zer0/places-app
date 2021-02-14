@@ -13,6 +13,7 @@ import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
 import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
 import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
+import { send } from 'https://cdn.kernvalley.us/js/std-js/slack.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
 import { selectText, formToPlace, clipboardCopy } from './functions.js';
 import { GA, ORG_TYPES, imgurClientId as clientId } from './consts.js';
@@ -163,7 +164,27 @@ $.ready.then(async () => {
 			}),
 		]);
 
-		if (await confirm('Submit data on GitHub (requires GitHub account)?')) {
+		if (await confirm('Submit data?')) {
+			try {
+				const { success = false, body = {}} = await send('https://contact.kernvalley.us/api/slack', {
+					name: 'Anonymous User',
+					email: 'no-reply@kernvalley.us',
+					subject: `Add ${data.name}`,
+					body: '```\n' + json + '\n```',
+				});
+
+				if (success === true) {
+					alert('Data submitted');
+				} else if ('error' in body && typeof body.error.message === 'string') {
+					alert(body.error.message);
+				} else {
+					alert('Error sending data');
+				}
+			} catch(err) {
+				console.error(err);
+				alert('Error sending data');
+			}
+		} else if (await confirm('Submit data on GitHub (requires GitHub account)?')) {
 			openWindow('https://github.com/kernvalley/places/issues/new/choose', {
 				name: 'GitHub Issues'
 			});
