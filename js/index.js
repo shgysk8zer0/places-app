@@ -16,7 +16,7 @@ import { loadImage } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
 import { send } from 'https://cdn.kernvalley.us/js/std-js/slack.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
 import { selectText, formToPlace, clipboardCopy } from './functions.js';
-import { GA, ORG_TYPES, imgurClientId as clientId } from './consts.js';
+import { GA, imgurClientId as clientId } from './consts.js';
 
 $(document.documentElement).toggleClass({
 	'no-js': false,
