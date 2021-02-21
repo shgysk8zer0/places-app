@@ -50,6 +50,42 @@ export function formToPlace(form) {
 					'longitude': parseFloat(form.get('geo[longitude]')),
 					'url': `geo:${form.get('geo[latitude]')},${form.get('geo[longitude]')}`,
 				},
+				'openingHoursSpecification': [{
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Sunday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Sunday][closes]') || null,
+					'dayOfWeek': 'Sunday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Monday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Monday][closes]') || null,
+					'dayOfWeek': 'Monday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Tuesday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Tuesday][closes]') || null,
+					'dayOfWeek': 'Tuesday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Wednesday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Wednesday][closes]') || null,
+					'dayOfWeek': 'Wednesday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Thursday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Thursday][closes]') || null,
+					'dayOfWeek': 'Thursday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Friday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Friday][closes]') || null,
+					'dayOfWeek': 'Friday',
+				}, {
+					'@type': 'OpeningHoursSpecification',
+					'opens': form.get('openingHoursSpecification[Saturday][opens]') || null,
+					'closes': form.get('openingHoursSpecification[Saturday][closes]') || null,
+					'dayOfWeek': 'Saturday',
+				}].filter(({ opens, closes }) => typeof opens === 'string' && typeof closes === 'string'),
 			};
 		} else {
 			data.address = {
