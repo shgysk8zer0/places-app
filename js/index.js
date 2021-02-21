@@ -82,14 +82,6 @@ $.ready.then(async () => {
 		}
 	});
 
-	$('#place-type').change(({ target: { value }}) => {
-		if (ORG_TYPES.includes(value)) {
-			$('#hours-section').attr({ disabled: true, hidden: true });
-		} else {
-			$('#hours-section').attr({ disabled: false, hidden: false });
-		}
-	});
-
 	$('#place-address-locality').change(({ target: { value }}) => {
 		if (value.length !== 0) {
 			const city = document.querySelector(`#cities > [value="${CSS.escape(value)}"][data-postal-code]`);
