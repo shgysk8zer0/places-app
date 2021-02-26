@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for optional `"alternateType"`
 - Image uploads via Imgur API
 - Prepare for launch on Play Store by adding `<app-stores>`
+- Google Play Store app metadata
 
 ### Changed
 - Update page with more content and FAQ
