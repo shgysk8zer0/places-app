@@ -1,6 +1,6 @@
 /* eslint-env serviceworker */
 /* eslint no-unused-vars: 0 */
-/* 2021-02-21T13:17 */
+/* 2021-02-26T09:47 */
 
 const config = {
 	version: '2.0.0',
@@ -17,6 +17,7 @@ const config = {
 
 		/* Scripts */
 		'/js/index.min.js',
+		'https://cdn.kernvalley.us/js/std-js/no-console.js',
 		'https://cdn.kernvalley.us/components/leaflet/map.min.js',
 
 		/* Styles */
@@ -36,6 +37,7 @@ const config = {
 		'https://cdn.kernvalley.us/img/logos/instagram.svg',
 		'https://cdn.kernvalley.us/img/keep-kern-clean.svg',
 		'https://cdn.kernvalley.us/img/adwaita-icons/actions/find-location.svg',
+		'https://cdn.kernvalley.us/img/logos/play-badge.svg',
 	].map(path => new URL(path, location.origin)),
 	allowed: [
 		'https://www.google-analytics.com/analytics.js',
