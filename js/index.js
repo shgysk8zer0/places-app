@@ -29,22 +29,24 @@ $(document.documentElement).toggleClass({
 
 if (typeof GA === 'string' && GA.length !== 0) {
 	requestIdleCallback(() => {
-		importGa(GA).then(async ({ set, pageView, send, ready }) => {
-			await Promise.allSettled([$.ready, ready()]);
-			set('transport', 'beacon');
-			pageView(location.pathname);
+		importGa(GA).then(async ({ set, pageView, send, ready, hasGa }) => {
+			if (hasGa()) {
+				await Promise.allSettled([$.ready, ready()]);
+				set('transport', 'beacon');
+				pageView(location.pathname);
 
-			$('a[rel~="external"]').click(externalHandler, { passive: true, capture: true });
-			$('a[href^="tel:"]').click(telHandler, { passive: true, capture: true });
-			$('a[href^="mailto:"]').click(mailtoHandler, { passive: true, capture: true });
+				$('a[rel~="external"]').click(externalHandler, { passive: true, capture: true });
+				$('a[href^="tel:"]').click(telHandler, { passive: true, capture: true });
+				$('a[href^="mailto:"]').click(mailtoHandler, { passive: true, capture: true });
 
-			$(document.forms).submit(({ target }) => {
-				send({
-					eventCategory: 'form',
-					eventAction: 'submit',
-					eventLabel: target.name || target.id,
-				});
-			}, { passive: true, capture: true });
+				$(document.forms).submit(({ target }) => {
+					send({
+						eventCategory: 'form',
+						eventAction: 'submit',
+						eventLabel: target.name || target.id,
+					});
+				}, { passive: true, capture: true });
+			}
 		});
 	});
 }
