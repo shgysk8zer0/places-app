@@ -61,6 +61,10 @@
   "related_applications": [{
     "platform": "webapp",
     "url": "https://places.kernvalley.us/manifest.json"
+  }, {
+    "platform": "play",
+    "url": "https://play.google.com/store/apps/details?id=us.kernvalley.places.twa",
+    "id": "us.kernvalley.places.twa"
   }],
   "share_target": {
     "action": "/",
