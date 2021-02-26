@@ -37,12 +37,13 @@
 		<link rel="preconnect" href="https://maps.wikimedia.org" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="preconnect" href="https://api.github.com" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="preload" href="https://cdn.kernvalley.us/fonts/roboto.woff2" as="font" type="font/woff2" crossorigin="anonymous" importance="high" />
-		<link rel="preload" href="https://cdn.kernvalley.us/components/leaflet/map.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="high" />
-		<link rel="preload" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="high" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" />
+		<link rel="preload" href="/img/icons.svg" as="image" type="image/svg+xml" importance="high" />
+		<link rel="preload" href="https://cdn.kernvalley.us/components/leaflet/map.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="low" />
+		<link rel="preload" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="low" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" />
 		<link rel="preload" href="https://cdn.kernvalley.us/components/github/user.css" as="style" type="text/css" crossorigin="anonymous" referrerpolicy="no-referrer" importance="auto" />
+		<link rel="preload" as="script" href="https://cdn.kernvalley.us/components/leaflet/map.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" priority="low" />
 		<script src="https://cdn.polyfill.io/v3/polyfill.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer="" nomodule=""></script>
 		<script src="https://unpkg.com/@webcomponents/custom-elements@1.4.2/custom-elements.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer" integrity="sha384-xyhN4T4+9VPh8uXl6uWjGzsqwNXN9C2tla8b6zSrSqYlMFUoeCdoxiEJU0js+GNE" async="" defer="" nomodule=""></script>
-		<script src="https://cdn.kernvalley.us/components/leaflet/map.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" async="" defer=""></script>
 		<!-- <script type="module" src="/js/index.js" referrerpolicy="no-referrer" async="" defer=""></script> -->
 		<script src="/js/index.min.js" referrerpolicy="no-referrer" async="" defer=""></script>
 		<link rel="manifest" href="/manifest.json" />
@@ -53,7 +54,6 @@
 		<link rel="icon" type="image/png" sizes="16x16" href="/img/icon-16.png" />
 		<link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#528ff9" />
 		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="preload" href="/img/icons.svg" as="image" type="image/svg+xml" />
 		<!-- <link rel="stylesheet" href="/css/index.css" referrerpolicy="no-referrer" media="all" /> -->
 		<link rel="stylesheet" href="/css/index.min.css" referrerpolicy="no-referrer" media="all" />
 	</head>
@@ -67,6 +67,7 @@
 			</button>
 			<span class="grow-4"></span>
 			<button type="button" class="btn nav-btn" title="Open FAQ" data-show-modal="#faq-dialog">
+				<span class="mobile-hidden">FAQ</span>
 				<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#question"></use>
 				</svg>
@@ -199,6 +200,8 @@
 					</a>
 				</div>
 			</div>
+			<hr />
+			<app-stores id="store-list" class="flex row wrap app-stores"></app-stores>
 			<hr />
 			<div class="copyright flex wrap space-evenly">
 				<github-user user="kernvalley" loading="lazy">
@@ -422,7 +425,7 @@
 							<input name="address[addressLocality]" list="cities" id="place-address-locality" class="input inline-block" placeholder="City" pattern="[A-Z][A-z\. ]+" autocomplete="off" required="" />
 							<span>,</span>
 							<input name="address[addressRegion]" id="place-address-region" class="input inline-block" value="CA" required="" />
-							<input type="text" name="address[postalCode]" id="place-postal-code" class="input inline-block" inputmode="numeric" placeholder="#####" pattern="\d{5}" list="zips" autocomplete="off" required="" />
+							<input type="text" name="address[postalCode]" id="place-postal-code" class="input inline-block input-reset" inputmode="numeric" placeholder="#####" pattern="\d{5}" list="zips" autocomplete="off" required="" />
 						</div>
 					</details>
 				</fieldset>
@@ -437,11 +440,11 @@
 						</div>
 						<div class="form-group">
 							<label for="longitude" class="input-label">Longitude</label>
-							<input type="number" id="longitude" class="input" name="geo[longitude]" step="0.00000001" placeholder="Longitude" />
+							<input type="number" id="longitude" class="input input-reset" name="geo[longitude]" step="0.00000001" placeholder="Longitude" />
 						</div>
 						<div class="form-group">
 							<label for="elevation" class="input-label">Elevation</label>
-							<input type="number" id="elevation" class="input" name="geo[elevation]" placeholder="Elevation (meters)" />
+							<input type="number" id="elevation" class="input input-reset" name="geo[elevation]" placeholder="Elevation (meters)" />
 						</div>
 						<br />
 						<div class="flex row space-evenly">
@@ -470,7 +473,7 @@
 						<input type="hidden" name="image[@type]" value="ImageObject" />
 						<div class="form-group">
 							<label for="place-img-url">URL</label>
-							<input type="url" name="image[url]" id="place-img-url" class="input" placeholder="https://example.com/img.jpg" />
+							<input type="url" name="image[url]" id="place-img-url" class="input input-reset" placeholder="https://example.com/img.jpg" />
 						</div>
 						<div class="form-group">
 							<label for="img-upload" class="input-label">Or Upload</label>
@@ -523,40 +526,40 @@
 						<div class="form-group">
 							<label>
 								<span>Tue<span class="mobile-hidden">sday</span></span>
-								<input type="time" id="tues-opens" class="weekday-opens" name="openingHoursSpecification[Tuesday][opens]" placeholder="##:##" />
+								<input type="time" id="tues-opens" class="weekday-opens input-reset" name="openingHoursSpecification[Tuesday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" id="tues-closes" class="weekday-closes" name="openingHoursSpecification[Tuesday][closes]" placeholder="##:##" />
+							<input type="time" id="tues-closes" class="weekday-closes input-reset" name="openingHoursSpecification[Tuesday][closes]" placeholder="##:##" />
 						</div>
 						<input type="hidden" name="openingHoursSpecification[Wednesday][@type]" value="OpeningHoursSpecification" />
 						<input type="hidden" name="openingHoursSpecification[Wednesday][dayofWeek]" value="Wednesday" />
 						<div class="form-group">
 							<label>
 								<span>Wed<span class="mobile-hidden">nesday</span></span>
-								<input type="time" id="wed-opens" class="weekday-opens" name="openingHoursSpecification[Wednesday][opens]" placeholder="##:##" />
+								<input type="time" id="wed-opens" class="weekday-opens input-reset" name="openingHoursSpecification[Wednesday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" id="wed-closes" class="weekday-closes" name="openingHoursSpecification[Wednesday][closes]" placeholder="##:##" />
+							<input type="time" id="wed-closes" class="weekday-closes input-reset" name="openingHoursSpecification[Wednesday][closes]" placeholder="##:##" />
 						</div>
 						<input type="hidden" name="openingHoursSpecification[Thursday][@type]" value="OpeningHoursSpecification" />
 						<input type="hidden" name="openingHoursSpecification[Thursday][dayofWeek]" value="Thursday" />
 						<div class="form-group">
 							<label>
 								<span>Thu<span class="mobile-hidden">rsday</span></span>
-								<input type="time" id="thur-opens" class="weekday-opens" name="openingHoursSpecification[Thursday][opens]" placeholder="##:##" />
+								<input type="time" id="thur-opens" class="weekday-opens input-reset" name="openingHoursSpecification[Thursday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" id="thurs-closes" class="weekday-closes" name="openingHoursSpecification[Thursday][closes]" placeholder="##:##" />
+							<input type="time" id="thurs-closes" class="weekday-closes input-reset" name="openingHoursSpecification[Thursday][closes]" placeholder="##:##" />
 						</div>
 						<input type="hidden" name="openingHoursSpecification[Friday][@type]" value="OpeningHoursSpecification" />
 						<input type="hidden" name="openingHoursSpecification[Friday][dayofWeek]" value="Friday" />
 						<div class="form-group">
 							<label>
 								<span>Fri<span class="mobile-hidden">day</span></span>
-								<input type="time" id="fri-opens" class="weekday-opens" name="openingHoursSpecification[Friday][opens]" placeholder="##:##" />
+								<input type="time" id="fri-opens" class="weekday-opens input-reset" name="openingHoursSpecification[Friday][opens]" placeholder="##:##" />
 							</label>
 							<span>—</span>
-							<input type="time" id="fri-closes" class="weekday-closes" name="openingHoursSpecification[Friday][closes]" placeholder="##:##" />
+							<input type="time" id="fri-closes" class="weekday-closes input-reset" name="openingHoursSpecification[Friday][closes]" placeholder="##:##" />
 						</div>
 						<input type="hidden" name="openingHoursSpecification[Saturday][@type]" value="OpeningHoursSpecification" />
 						<input type="hidden" name="openingHoursSpecification[Saturday][dayofWeek]" value="Saturday" />
@@ -666,9 +669,10 @@
 					</dt>
 					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
 						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
-						<i itemprop="text" class="block">Upon clicking <q>Submit</q> on the form, a popup will open on GitHub. Choose <q>Submit Place</q> and either drag in the saved file to the bottom of the form to upload or paste the data that was automatically copied.</i>
+						<i itemprop="text" class="block">Upon clicking <q>Submit</q> on the form, you will be given several options for submitting data. This includes a direct submission of the data, creating an issue on GitHub (account required), or sharing through email or any supported app or service. The generated data is also copied to your clipboard if supported.</i>
 					</dd>
 				</dl>
+
 				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
 					<dt class="faq-question">
 						<b title="Question">
@@ -681,20 +685,6 @@
 					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
 						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
 						<i itemprop="text" class="block">This data is used for KRV Maps, KRV Guide, serveral other web apps, and is also open source and freely available to the public.</i>
-					</dd>
-				</dl>
-				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
-					<dt class="faq-question">
-						<b title="Question">
-							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
-								<use xlink:href="/img/icons.svg#question"></use>
-							</svg>
-						</b>
-						<b><q itemprop="name">Why are some fields disabled for certain types of busiesses, E.G. <q>Veteranry Care</q>?</q></b>
-					</dt>
-					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
-						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
-						<i itemprop="text" class="block">It's an unfortunate consequence of following an existing specification; some types of businesses are considered <q>LocalBusiness</q> types, and others are considered <q>Organization</q>s, and <q>Organization</q>s do not support certain fields.</i>
 					</dd>
 				</dl>
 				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
@@ -718,12 +708,45 @@
 								<use xlink:href="/img/icons.svg#question"></use>
 							</svg>
 						</b>
+						<b><q itemprop="name">Is there any other use for this?</q></b>
+					</dt>
+					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
+						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
+						<i itemprop="text" class="block">
+							<p>Aside from adding a place or business to KRV Maps, KRV Guide, and any other app or site that utilizes the data, this data is also useful to local business owners and webmasters, as it is what is expected by Google and other Search Engines for <q>Rich Results</q> for <a href="https://developers.google.com/search/docs/data-types/local-business" rel="noopener noreferrer external">
+								<span>Local Businesses</span>
+								<svg class="icon" height="18" width="18" fill="currentColor" role="img" aria-hidden="ttrue">
+									<use xlink:href="/img/icons.svg#link-external"></use>
+								</svg>
+							</a>.</p>
+							<p>If you run a website for the local business, you may add the following code to the website, replacing the example data (<i>between the <code>&lt;script&gt;</code> tags</i>) with what is copied to your clipboard and/or saved to a file.</p>
+							<pre><code>
+&lt;script type="application/ld"&gt;
+{
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	"name": "Your Business",
+	"url": "https://example.com",
+	"email": "user@example.com",
+}
+&lt;/script&gt;
+							</code></pre>
+						</i>
+					</dd>
+				</dl>
+				<dl aria-role="list" class="faq-group" title="FAQ" itemtype="https://schema.org/Question" itemscope="">
+					<dt class="faq-question">
+						<b title="Question">
+							<svg class="icon current-color" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
+								<use xlink:href="/img/icons.svg#question"></use>
+							</svg>
+						</b>
 						<b><q itemprop="name">I am a developer and want to use this data. Where do I start?</q></b>
 					</dt>
 					<dd class="faq-answer" itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" itemscope="">
 						<abbr title="Answer"><b>A<span class="mobile-hidden">nswer</span></b>:</abbr>
 						<i itemprop="text" class="block">The best way to start using the KernValley Places data in your project is by copying the data locally via:
-							<pre><code>git submodule add https://github.com/kernvalley/places.git</code></pre>
+							<pre><code>git submodule add https://github.com/kernvalley/places.git destination/directory</code></pre>
 							<p>See <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules" rel="noopener noreferrer external" class="underline">
 								<span>Git - Submodules</span>
 								<svg class="icon" height="18" width="18" fill="currentColor" role="img" aria-hidden="true">

@@ -45,10 +45,13 @@
   }],
   "categories": [
     "lifestlye",
-    "utilities"
+    "utilities",
+    "business"
   ],
   "features": [
+    "Creates data useful for Local Business \"Rich Data\" on Google and other Search Engines",
     "Offline access",
+    "Mark location on map to find GPS coordinates",
     "Easily submit place data, including Geo Coordinates, business hours, etc.",
     "Verify location via a map, showing marked location",
     "Save data to file and/or share place data"

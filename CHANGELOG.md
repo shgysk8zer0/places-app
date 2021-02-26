@@ -15,9 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support alternate formatting (`"location"`) for`"Organization"` types
 - Add support for optional `"alternateType"`
 - Image uploads via Imgur API
+- Prepare for launch on Play Store by adding `<app-stores>`
 
 ### Changed
 - Update page with more content and FAQ
+- Load `<leaflet-map>` script dynamically, after page load and idle
+
+### Fixed
+- Reset inputs with values set by JavaScript
+- Revert to initial `open` state of `<details>` in the form
 
 ### Removed
 - Do not allow uploading/bas64 encoding images
