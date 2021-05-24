@@ -52,7 +52,7 @@ if (typeof GA === 'string' && GA.length !== 0) {
 }
 
 $.ready.then(async () => {
-	init().catch(console.error);
+	init();
 	$('#identifier').value(uuidv6());
 
 	try {
