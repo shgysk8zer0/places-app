@@ -19,6 +19,7 @@ export function formToPlace(form) {
 			'@context': 'https://schema.org',
 			'identifier': form.get('identifier'),
 			'name': form.get('name').trim(),
+			'url': form.get('url').trim(),
 			'telephone': form.get('telephone') || null,
 			'email': form.get('email') || null,
 			'description': form.get('description').trim() || null,
