@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="no-js border-box smooth-scroll" data-theme="auto" itemtype="https://schema.org/WebPage" prefix="og: http://ogp.me/ns#" itemscope="">
+<html lang="en" dir="ltr" class="no-js border-box smooth-scroll" data-theme="auto" data-service-worker="/service-worker.js" data-scope="/" data-reload-on-update="" itemtype="https://schema.org/WebPage" prefix="og: http://ogp.me/ns#" itemscope="">
 	<head>
 		<base href="/" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="follow,index" />
-		<meta name="description" content="An app for submitting place data to the open KRV places data collection" />
-		<meta itemprop="description" content="An app for submitting place data to the open KRV places data collection" />
-		<meta name="keywords" content="geo, places, kern valley, kern river valley, map" />
-		<meta itemprop="keywords" content="geo, places, kern valley, kern river valley, map" />
+		<meta name="description" content="Add new places to KRV Apps, including the KRV Guide and Whiskey Flat Days apps" />
+		<meta itemprop="description" content="Add new places to KRV Apps, including the KRV Guide and Whiskey Flat Days apps" />
+		<meta name="keywords" content="geo, places, kern valley, kern river valley, map, guide" />
+		<meta itemprop="keywords" content="geo, places, kern valley, kern river valley, map, guide" />
 		<meta name="referrer" content="no-referrer"/>
 		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="color-scheme" content="dark light" />
 		<meta itemprop="thumbnailUrl" content="https://i.imgur.com/PPSaaYpl.jpg" />
 		<!-- Social data -->
 		<!-- Facebook | OpenGraph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="KRV Places" />
 		<meta property="og:url" content="https://places.kernvalley.us" />
-		<meta property="og:description" content="An app for submitting place data to the open KRV places data collection" />
+		<meta property="og:description" content="Add new places to KRV Apps, including the KRV Guide and Whiskey Flat Days apps" />
 		<meta property="og:keywords" content="geo, places, kern valley, kern river valley, map" />
 		<meta property="og:image" content="https://i.imgur.com/PPSaaYpl.jpg" />
 		<meta property="og:image:height" content="315" />
@@ -26,7 +27,7 @@
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:creator" content="kern_valley" />
-		<meta name="twitter:description" content="" />
+		<meta name="twitter:description" content="Add new places to KRV Apps, including the KRV Guide and Whiskey Flat Days apps" />
 		<meta name="twitter:image" content="https://i.imgur.com/PPSaaYpl.jpg" />
 		<!-- /Twitter -->
 		<!-- /Social data -->
@@ -72,7 +73,7 @@
 					<use xlink:href="/img/icons.svg#question"></use>
 				</svg>
 			</button>
-			<button type="button" is="pwa-install" id="install-btn" class="btn nav-btn" src="/service-worker.js" scope="/" title="Install Web App" reloadonupdate="" hidden="">
+			<button type="button" id="install-btn" class="btn nav-btn" title="Install Web App" hidden="">
 				<svg class="current-color icon" width="22" height="22" fill="currentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#system-software-install"></use>
 				</svg>
@@ -201,7 +202,7 @@
 				</div>
 			</div>
 			<hr />
-			<app-stores id="store-list" class="flex row wrap app-stores"></app-stores>
+			<app-stores id="store-list" class="flex row wrap space-evenly app-stores"></app-stores>
 			<hr />
 			<div class="copyright flex wrap space-evenly">
 				<github-user user="kernvalley" loading="lazy">

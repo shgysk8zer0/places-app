@@ -3,10 +3,10 @@
 /* 2021-02-26T09:47 */
 
 const config = {
-	version: '2.0.0',
+	version: '2.0.1',
 	fresh: [
 		'/',
-		'/manifest.json',
+		'/webapp.webmanifest',
 		'https://apps.kernvalley.us/apps.json',
 	].map(path => new URL(path, location.origin)),
 	stale: [
@@ -38,14 +38,17 @@ const config = {
 		'https://cdn.kernvalley.us/img/keep-kern-clean.svg',
 		'https://cdn.kernvalley.us/img/adwaita-icons/actions/find-location.svg',
 		'https://cdn.kernvalley.us/img/logos/play-badge.svg',
+		'https://cdn.kernvalley.us/img/logos/pwa-badge.svg',
 	].map(path => new URL(path, location.origin)),
 	allowed: [
 		'https://www.google-analytics.com/analytics.js',
 		'https://www.googletagmanager.com/gtag/js',
 		'https://maps.wikimedia.org/osm-intl/',
 		/https:\/\/\w+\.githubusercontent\.com\/u\/*/,
+		/\.(jpg|png|webp|svg|gif|woff2|woff)$/,
 	],
 	allowedFresh: [
 		'https://api.github.com/users/',
+		/\.(html|css|js|json)$/,
 	],
 };

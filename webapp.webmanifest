@@ -1,10 +1,11 @@
 {
   "name": "Kern Valley Places",
   "short_name": "KRV Places",
-  "version": "2.0.0",
+  "id": "KRVPlaces",
+  "version": "2.0.1",
   "lang": "en",
   "dir": "ltr",
-  "description": "An app for submitting place data to the open KRV places data collection",
+  "description": "Add new places to KRV Apps, including the KRV Guide and Whiskey Flat Days apps",
   "orientation": "any",
   "start_url": "/",
   "theme_color": "#007bff",
@@ -60,7 +61,7 @@
   "prefer_related_applications": false,
   "related_applications": [{
     "platform": "webapp",
-    "url": "https://places.kernvalley.us/manifest.json"
+    "url": "https://places.kernvalley.us/webapp.webmanifest"
   }, {
     "platform": "play",
     "url": "https://play.google.com/store/apps/details?id=us.kernvalley.places.twa",

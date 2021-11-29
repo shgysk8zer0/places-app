@@ -3,7 +3,7 @@ import 'https://cdn.kernvalley.us/js/std-js/shims.js';
 import 'https://cdn.kernvalley.us/components/share-button.js';
 import 'https://cdn.kernvalley.us/components/current-year.js';
 import 'https://cdn.kernvalley.us/components/github/user.js';
-import 'https://cdn.kernvalley.us/components/pwa/install.js';
+import 'https://cdn.kernvalley.us/components/install/prompt.js';
 import 'https://cdn.kernvalley.us/components/app/list-button.js';
 import 'https://cdn.kernvalley.us/components/app/stores.js';
 import 'https://cdn.kernvalley.us/components/share-target.js';
@@ -13,7 +13,6 @@ import { upload } from 'https://cdn.kernvalley.us/js/std-js/imgur.js';
 import { confirm } from 'https://cdn.kernvalley.us/js/std-js/asyncDialog.js';
 import { init } from 'https://cdn.kernvalley.us/js/std-js/data-handlers.js';
 import { save } from 'https://cdn.kernvalley.us/js/std-js/filesystem.js';
-import { uuidv6 } from 'https://cdn.kernvalley.us/js/std-js/uuid.js';
 import { loadImage, loadScript } from 'https://cdn.kernvalley.us/js/std-js/loader.js';
 import { send } from 'https://cdn.kernvalley.us/js/std-js/slack.js';
 import { importGa, externalHandler, telHandler, mailtoHandler } from 'https://cdn.kernvalley.us/js/std-js/google-analytics.js';
@@ -53,7 +52,16 @@ if (typeof GA === 'string' && GA.length !== 0) {
 
 $.ready.then(async () => {
 	init();
-	$('#identifier').value(uuidv6());
+
+	customElements.whenDefined('install-prompt').then(() => {
+		$('#install-btn').click(() => {
+			const InstallPrompt = customElements.get('install-prompt');
+			const prompt = new InstallPrompt();
+			prompt.show();
+		}).unhide();
+	});
+
+	$('#identifier').value(navigator.randomUUID());
 
 	try {
 		const additionalTypes = document.getElementById('place-type').cloneNode(true);
@@ -221,7 +229,7 @@ $.ready.then(async () => {
 	}, { passive: true });
 
 	$('form[name="addPlace"]').reset(() => {
-		$('#identifier').value(uuidv6());
+		$('#identifier').value(navigator.randomUUID());
 		$('.input-reset').value('');
 		$('#basic-section details:not([open]), #address-section details:not([open])').attr({ open: true });
 		$('#geo-section details[open], #image-section details[open], #hours-section details[open], #social-section details[open]').attr({ open: true });

@@ -4,3 +4,4 @@
 # Redirect default Netlify subdomain to primary domain
 http://modest-snyder-6ba512.netlify.com/* http://places.kernvalley.us/:splat 301!
 /contact	https://contact.kernvalley.us
+/manifest.json /webapp.webmanifest 301!

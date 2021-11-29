@@ -11,6 +11,6 @@
   "relation": ["delegate_permission/common.query_webapk"],
   "target": {
     "namespace": "web",
-    "site": "https://places.kernvalley.us/manifest.json"
+    "site": "https://places.kernvalley.us/webapp.webmanifest"
   }
 }]
