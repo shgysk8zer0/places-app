@@ -61,19 +61,19 @@
 	<body id="top" class="grid font-main background-primary color-default">
 		<header id="header" hidden=""></header>
 		<nav id="nav" class="background-accent color-alt sticky top shadow z-3 flex row no-wrap">
-			<button type="button" is="app-list" class="btn nav-btn" hidden="">
+			<button type="button" is="app-list" class="btn nav-btn" accesskey="a" hidden="">
 				<svg class="current-color icon" width="20" height="20" fill="currentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#apps"></use>
 				</svg>
 			</button>
 			<span class="grow-4"></span>
-			<button type="button" class="btn nav-btn" title="Open FAQ" data-show-modal="#faq-dialog">
+			<button type="button" class="btn nav-btn" title="Open FAQ" accesskey="?" data-show-modal="#faq-dialog">
 				<span class="mobile-hidden">FAQ</span>
 				<svg class="current-color icon" width="20" height="20" fill="curentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#question"></use>
 				</svg>
 			</button>
-			<button type="button" id="install-btn" class="btn nav-btn" title="Install Web App" hidden="">
+			<button type="button" id="install-btn" class="btn nav-btn" title="Install Web App" accesskey="i" hidden="">
 				<svg class="current-color icon" width="22" height="22" fill="currentColor" role="img" aria-hidden="true">
 					<use xlink:href="/img/icons.svg#system-software-install"></use>
 				</svg>
@@ -722,7 +722,7 @@
 							</a>.</p>
 							<p>If you run a website for the local business, you may add the following code to the website, replacing the example data (<i>between the <code>&lt;script&gt;</code> tags</i>) with what is copied to your clipboard and/or saved to a file.</p>
 							<pre><code>
-&lt;script type="application/ld"&gt;
+&lt;script type="application/ld+json"&gt;
 {
 	"@context": "https://schema.org",
 	"@type": "LocalBusiness",
