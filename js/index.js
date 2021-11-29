@@ -54,11 +54,13 @@ $.ready.then(async () => {
 	init();
 
 	customElements.whenDefined('install-prompt').then(() => {
-		$('#install-btn').click(() => {
+		const btn = document.getElementById('install-btn');
+		btn.addEventListener('click', () => {
 			const InstallPrompt = customElements.get('install-prompt');
 			const prompt = new InstallPrompt();
 			prompt.show();
-		}).each(el => el.hidden = false);
+		});
+		btn.hidden = false;
 	});
 
 	$('#identifier').value(crypto.randomUUID());
