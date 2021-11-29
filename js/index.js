@@ -58,10 +58,10 @@ $.ready.then(async () => {
 			const InstallPrompt = customElements.get('install-prompt');
 			const prompt = new InstallPrompt();
 			prompt.show();
-		}).unhide();
+		}).each(el => el.hidden = false);
 	});
 
-	$('#identifier').value(navigator.randomUUID());
+	$('#identifier').value(crypto.randomUUID());
 
 	try {
 		const additionalTypes = document.getElementById('place-type').cloneNode(true);
@@ -229,7 +229,7 @@ $.ready.then(async () => {
 	}, { passive: true });
 
 	$('form[name="addPlace"]').reset(() => {
-		$('#identifier').value(navigator.randomUUID());
+		$('#identifier').value(crypto.randomUUID());
 		$('.input-reset').value('');
 		$('#basic-section details:not([open]), #address-section details:not([open])').attr({ open: true });
 		$('#geo-section details[open], #image-section details[open], #hours-section details[open], #social-section details[open]').attr({ open: true });
