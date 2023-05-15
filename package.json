@@ -2,6 +2,7 @@
   "name": "places-app",
   "version": "2.0.1",
   "private": true,
+  "type": "module",
   "description": "A PWA for interacting with KernValley.us Places API",
   "config": {
     "serve": {
