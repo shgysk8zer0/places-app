@@ -65,6 +65,6 @@
     "version:bump:major": "npm version --no-git-tag-version patch"
   },
   "dependencies": {
-    "netlify-js-app": "^3.0.4"
+    "netlify-js-app": "^3.2.2"
   }
 }
