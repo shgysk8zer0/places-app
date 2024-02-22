@@ -53,6 +53,32 @@ if (typeof GA === 'string' && GA.length !== 0) {
 $.ready.then(async () => {
 	init();
 
+	if (location.hash.length > 1) {
+		const target = document.getElementById(location.hash.substring(1));
+
+		if (target instanceof HTMLElement && target.tagName === 'DIALOG') {
+			target.showModal();
+			target.addEventListener('close', () => {
+				location.hash = '';
+			}, { once:  true });
+		}
+	}
+
+	window.addEventListener('hashchange', () => {
+		if (location.hash.length > 1) {
+			const target = document.getElementById(location.hash.substring(1));
+
+			if (target instanceof HTMLElement && target.tagName === 'DIALOG') {
+				target.showModal();
+				target.addEventListener('close', () => {
+					location.hash = '';
+				}, { once:  true });
+			}
+		}
+	}, {
+		passive: true,
+	});
+
 	customElements.whenDefined('install-prompt').then(() => {
 		const btn = document.getElementById('install-btn');
 		btn.addEventListener('click', () => {
