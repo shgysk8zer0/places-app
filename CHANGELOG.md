@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Update page with more content and FAQ
 - Load `<leaflet-map>` script dynamically, after page load and idle
+- Update dependencies and config
 
 ### Fixed
 - Reset inputs with values set by JavaScript
