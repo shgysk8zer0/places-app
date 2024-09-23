@@ -51,7 +51,7 @@
     "fix:css": "if [ -f './stylelintrc.json' ]; then stylelint ${npm_package_config_dir_css} --fix; fi",
     "fix:js": "if [ -f 'eslint.config.js' ]; then eslint. --fix; fi",
     "build": "npm run build:icons && npm run build:css && npm run build:js",
-    "build:css": "if [ -f 'postcss.config.js' ]; then postcss ${npm_package_config_dir_css}index.css -o ${npm_package_config_dir_css}index.min.css; fi",
+    "build:css": "postcss ${npm_package_config_dir_css}index.css -o ${npm_package_config_dir_css}index.min.css",
     "build:icons": "if [ -f ${npm_package_config_icons} ]; then svg-use-symbols -c ${npm_package_config_icons} -o 'img/icons.svg'; fi",
     "build:js": "if [ -f 'rollup.config.js' ]; then rollup --config; fi",
     "netlify": "if [ -f '.netlify/state.json' ]; then npm run netlify:live; else npm run netlify:serve; fi",
@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@shgysk8zer0/eslint-config": "^1.0.1",
-    "@shgysk8zer0/postcss-import": "^1.1.0"
+    "@shgysk8zer0/postcss-import": "^1.1.0",
+    "@shgysk8zer0/rollup-import": "^1.2.4"
   }
 }
